@@ -2,9 +2,9 @@
 
 ## introduce
 
-  - API를 이용하여 음악db를 로드하는 음악 플레이어
-  - tools : html, css, typescript, react
-  - redux, styled component 적용
+    - API를 이용하여 음악db를 로드하는 음악 플레이어
+    - tools : html, css, typescript, react
+    - redux, styled component 적용
 
 ## component
 
@@ -21,7 +21,7 @@
         - 내가 library에 등록한 음악들이 담긴 list
       [play-list]
         - 현재 내가 재생을 누른 음악들이 담긴 list
-        
+
     [footer]
       - 현재 내가 재생중인 음악 표시
       - 위로 화살표를 누르면 [main]-[play-list] 활성화 됨.
