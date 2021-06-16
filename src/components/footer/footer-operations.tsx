@@ -1,31 +1,25 @@
-
 import styled from "styled-components";
 
 const FooterOperationWrap = styled.div`
-    display : flex;
-    width : 250px;
-    height : 33px;
-    position : absolute;
-    right : 20px;
-    top : 0px;
+  display: flex;
+  width: 250px;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Operations = styled.i`
-    width : 30px;
-    height : 30px;
-    color : #fff;
+  font-size: 20px;
+  color: #fff;
+  line-height: 30px;
 `;
 
-export function FooterOperations(){
-
-
-    return (
-        <FooterOperationWrap>
-            <Operations className = "fas fa-play" />
-            <Operations className = "fas fa-pause" />
-            <Operations className = "fas fa-thumbs-up" />
-        </FooterOperationWrap>
-    )
+export function FooterOperations() {
+  return (
+    <FooterOperationWrap>
+      <Operations className="fas fa-play" />
+      <Operations className="fas fa-pause" />
+      <Operations className="fas fa-thumbs-up" />
+    </FooterOperationWrap>
+  );
 }
-
-

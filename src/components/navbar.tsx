@@ -1,21 +1,42 @@
+import styled from "styled-components";
+
+const NavbarWrap = styled.div`
+  width: 100%;
+  height: 10vh;
+  /* position: absolute; */
+  /* top: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NavbarMenusWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 560px;
+  height: 30px;
+`;
+
+const NavbarMenu = styled.i`
+  font-size: 25px;
+  color: #fff;
+`;
+
 function NavbarMenus() {
   return (
-    <div id="header-menus">
-      <i className="fas fa-home"></i>
-      <i className="fas fa-chart-bar"></i>
-      <i className="far fa-list-alt"></i>
-      <i className="fas fa-search"></i>
-    </div>
+    <NavbarMenusWrap>
+      <NavbarMenu className="fas fa-home"></NavbarMenu>
+      <NavbarMenu className="fas fa-chart-bar"></NavbarMenu>
+      <NavbarMenu className="fas fa-list-alt"></NavbarMenu>
+      <NavbarMenu className="fas fa-search"></NavbarMenu>
+    </NavbarMenusWrap>
   );
 }
 
 export function Navbar() {
   return (
-    <div id="header">
-      <div id="header-logo-img">
-        <img src="./navbar-logo.png" alt="header" />
-      </div>
+    <NavbarWrap>
       <NavbarMenus />
-    </div>
+    </NavbarWrap>
   );
 }
