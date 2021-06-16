@@ -26,7 +26,7 @@ export function Main() {
     <MainWrap>
       {/* <Maintitle title="Genre" />
       <MainGenre />
-      <MainMusicList /> */}
+      <MainMusicList /> ggg  */}
       <MainPlayingList />
     </MainWrap>
   );
