@@ -6,6 +6,7 @@ import { GlobalState } from "../redux/reducer";
 const NavbarWrap = styled.div`
   width: 100%;
   height: 10vh;
+  min-height: 60px;
   /* position: absolute; */
   /* top: 0; */
   display: flex;
@@ -39,8 +40,8 @@ export default function Navbar() {
     state.a,
     state.b,
   ]);
-
   const dispatch = useDispatch();
+
   return (
     <NavbarWrap>
       <NavbarMenus />
