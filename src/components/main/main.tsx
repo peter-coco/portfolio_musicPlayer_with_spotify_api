@@ -3,6 +3,7 @@ import { MainRecommandedList } from "./main-musiclist";
 import { MainPlayingList } from "./main-playingList";
 
 import styled from "styled-components";
+import { GlobalState } from "../../redux/reducer";
 import { useSelector } from "react-redux";
 
 const MainWrap = styled.div`
@@ -39,22 +40,31 @@ const MainContentsTitleUnderbar = styled.div`
   height: 5px;
 `;
 
-function Maintitle({ title }: { title: string }) {
+function Maintitle({ title, barColor }: { title: string; barColor: string }) {
   return (
     <MainContentsTitle>
       <MainContentsTitleText>{title}</MainContentsTitleText>
-      <MainContentsTitleUnderbar style={{ backgroundColor: "#1b1b1b" }} />
+      <MainContentsTitleUnderbar style={{ backgroundColor: `${barColor}` }} />
     </MainContentsTitle>
   );
 }
 
 export function Main() {
   // const mode = useSelector;
+  const mainModeIdx = useSelector<GlobalState, number>(
+    (state) => state.mainContentsModeIdx
+  );
+
+  const titleList = ["Recommanded", "Genre", "Library"];
+  const titleUnderBarColor = ["#72B1C5", "#7972C5", "#D96BC1"];
 
   return (
     <MainWrap>
       <MainContentsWrap>
-        <Maintitle title="Recommanded" />
+        <Maintitle
+          title={titleList[mainModeIdx]}
+          barColor={titleUnderBarColor[mainModeIdx]}
+        />
         <MainGenre />
         <MainRecommandedList />
       </MainContentsWrap>

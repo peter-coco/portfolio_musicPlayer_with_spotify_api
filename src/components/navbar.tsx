@@ -26,21 +26,59 @@ const NavbarMenu = styled.i`
   color: #fff;
 `;
 
-const NavbarMenus = () => (
-  <NavbarMenusWrap>
-    <NavbarMenu className="fas fa-home"></NavbarMenu>
-    <NavbarMenu className="fas fa-chart-bar"></NavbarMenu>
-    <NavbarMenu className="fas fa-list-alt"></NavbarMenu>
-    <NavbarMenu className="fas fa-search"></NavbarMenu>
-  </NavbarMenusWrap>
-);
+const NavbarMenus = () => {
+  const mainModeIdx = useSelector<GlobalState>(
+    (state) => state.mainContentsModeIdx
+  );
+  const dispatch = useDispatch();
+
+  return (
+    <NavbarMenusWrap>
+      <NavbarMenu
+        className="fas fa-home"
+        onClick={() => {
+          dispatch({
+            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
+            payload: { modeNum: 0 },
+          });
+        }}
+      />
+      <NavbarMenu
+        className="fas fa-chart-bar"
+        onClick={() => {
+          dispatch({
+            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
+            payload: { modeNum: 1 },
+          });
+        }}
+      />
+      <NavbarMenu
+        className="fas fa-list-alt"
+        onClick={() => {
+          dispatch({
+            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
+            payload: { modeNum: 2 },
+          });
+        }}
+      />
+      <NavbarMenu
+        className="fas fa-search"
+        onClick={() => {
+          dispatch({
+            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
+            payload: { modeNum: 3 },
+          });
+        }}
+      />
+    </NavbarMenusWrap>
+  );
+};
 
 export default function Navbar() {
-  const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
-    state.a,
-    state.b,
-  ]);
-  const dispatch = useDispatch();
+  // const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
+  //   state.a,
+  //   state.b,
+  // ]);
 
   return (
     <NavbarWrap>

@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { GlobalState } from "../../redux/reducer";
 
 const MainGenreWrap = styled.div`
   width: 100%;
   height: 80%;
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
 `;
 
@@ -34,8 +36,12 @@ export function MainGenre() {
     "Etc",
   ];
 
+  const mainModeIdx = useSelector<GlobalState>(
+    (state) => state.mainContentsModeIdx
+  );
+
   return (
-    <MainGenreWrap>
+    <MainGenreWrap style={{ display: mainModeIdx === 1 ? "flex" : "none" }}>
       {genreLists.map((musicGenre) => (
         <MainGenreLists key={musicGenre} musicGenre={musicGenre} />
       ))}

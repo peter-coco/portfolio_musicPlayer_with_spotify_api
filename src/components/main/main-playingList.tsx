@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import playingMusicImg from "../../image/main-logo.png";
-import { GlobalState } from "../../redux/reducer";
+// import { GlobalState } from "../../redux/reducer";
 
 import albumImg from "../../image/navbar-logo.png";
 
@@ -108,11 +108,6 @@ function MusicLists({
 }
 
 function MusicPlayinglistNLyric() {
-  const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
-    state.a,
-    state.b,
-  ]);
-
   // dummy data --> 추후 api에서 데이터 받아서 전송할것임.
   const musicListdata = [
     // 제목, 가수, 앨범
