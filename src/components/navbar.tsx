@@ -1,4 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Actions from "../redux/actions";
+import { GlobalState } from "../redux/reducer";
 
 const NavbarWrap = styled.div`
   width: 100%;
@@ -22,18 +25,22 @@ const NavbarMenu = styled.i`
   color: #fff;
 `;
 
-function NavbarMenus() {
-  return (
-    <NavbarMenusWrap>
-      <NavbarMenu className="fas fa-home"></NavbarMenu>
-      <NavbarMenu className="fas fa-chart-bar"></NavbarMenu>
-      <NavbarMenu className="fas fa-list-alt"></NavbarMenu>
-      <NavbarMenu className="fas fa-search"></NavbarMenu>
-    </NavbarMenusWrap>
-  );
-}
+const NavbarMenus = () => (
+  <NavbarMenusWrap>
+    <NavbarMenu className="fas fa-home"></NavbarMenu>
+    <NavbarMenu className="fas fa-chart-bar"></NavbarMenu>
+    <NavbarMenu className="fas fa-list-alt"></NavbarMenu>
+    <NavbarMenu className="fas fa-search"></NavbarMenu>
+  </NavbarMenusWrap>
+);
 
-export function Navbar() {
+export default function Navbar() {
+  const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
+    state.a,
+    state.b,
+  ]);
+
+  const dispatch = useDispatch();
   return (
     <NavbarWrap>
       <NavbarMenus />

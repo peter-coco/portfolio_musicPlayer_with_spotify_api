@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import playingMusicImg from "../../image/main-logo.png";
+import { GlobalState } from "../../redux/reducer";
 
 const MainPlayingListWrap = styled.div`
   display: flex;
@@ -21,6 +23,20 @@ const MusicListTopTitle = styled.div`
   color: #fff;
   font-size: 30px;
 `;
+
+// const MusiclistBottom = styled.div<{ w: number; h: number }>`
+//    부모중에 .a 가 있다면 컬러를 레드로하겠다. & : 나 자신 --> nested grammer
+//   width: ${(props) => (props.w < 200 ? 200 : 100)}px;
+//   .a & {
+//     color: red;
+//   }
+//   .b {
+//     color: red;
+//     .c {
+//       color: blue;
+//     }
+//   }
+// `;
 const MusiclistBottom = styled.div``;
 const PlayingMusicImg = styled.img`
   width: 400px;
@@ -32,10 +48,14 @@ function MusicList() {
 }
 
 function MusiclistNLyric() {
+  const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
+    state.a,
+    state.b,
+  ]);
   return (
     <MusiclistWrap>
       <MusicListTop>
-        <MusicListTopTitle>playList</MusicListTopTitle>
+        <MusicListTopTitle>playList{a}</MusicListTopTitle>
         <MusicListTopTitle>lyric</MusicListTopTitle>
       </MusicListTop>
       <MusiclistBottom>

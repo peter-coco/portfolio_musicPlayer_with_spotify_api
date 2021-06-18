@@ -2,14 +2,16 @@ import React from "react";
 import logo from "./logo.svg";
 // import './App.css';
 
-import { Navbar } from "./components/navbar";
+import Navbar from "./components/navbar";
 import { Footer } from "./components/footer/footer";
 import { Main } from "./components/main/main";
 
 import styled from "styled-components";
+import { Provider } from "react-redux";
+import store from "./redux";
 
 const BackgroundWrap = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   /* position: fixed; // 음... 이전에 어떻게 했지?? */
   background: linear-gradient(
@@ -22,11 +24,13 @@ const BackgroundWrap = styled.div`
 
 function App() {
   return (
-    <BackgroundWrap>
-      <Navbar />
-      <Main />
-      <Footer />
-    </BackgroundWrap>
+    <Provider store={store}>
+      <BackgroundWrap>
+        <Navbar />
+        <Main />
+        <Footer />
+      </BackgroundWrap>
+    </Provider>
   );
 }
 

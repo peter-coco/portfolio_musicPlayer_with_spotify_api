@@ -13,7 +13,7 @@ const FooterWrap = styled.div`
   display: flex;
 
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const MusicInforImage = styled.img`
@@ -24,7 +24,7 @@ const MusicInforImage = styled.img`
 export function Footer() {
   return (
     <FooterWrap>
-      <MusicInforImage src={musicImg} />
+      <div style={{ width: 250 }} />
       <FooterMusicInfor />
       <FooterOperations />
     </FooterWrap>
