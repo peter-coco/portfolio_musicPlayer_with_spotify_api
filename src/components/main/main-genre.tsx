@@ -17,6 +17,12 @@ const MainGenreList = styled.div`
   margin-right: 50px;
   text-align: center;
   line-height: 50px;
+  @media (max-width: 750px) {
+    width: 130px;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 30px;
+  }
 `;
 
 function MainGenreLists({ musicGenre }: { musicGenre: string }) {

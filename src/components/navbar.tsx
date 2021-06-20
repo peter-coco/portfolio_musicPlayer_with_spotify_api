@@ -19,11 +19,21 @@ const NavbarMenusWrap = styled.div`
   justify-content: space-between;
   width: 560px;
   height: 30px;
+  @media (max-width: 750px) {
+    width: 200px;
+  }
 `;
 
 const NavbarMenu = styled.i`
   font-size: 25px;
+  line-height: 30px;
   color: #fff;
+  @media (max-width: 750px) {
+    font-size: 20px;
+  }
+  @media (max-width: 350px) {
+    font-size: 15px;
+  }
 `;
 
 const NavbarMenus = () => {

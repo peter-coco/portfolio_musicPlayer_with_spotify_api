@@ -16,26 +16,40 @@ const FooterWrap = styled.div`
   display: flex;
 
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  @media (max-width: 750px) {
+    padding: 0 10px;
+  }
 `;
 
 const FooterLogoImg = styled.img`
   width: 60px;
   height: 60px;
+
+  @media (max-width: 750px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const FooterLogoImgWrap = styled.div`
   width: 250px;
   height: 100%;
+  display: flex;
+  align-items: center;
+  @media (max-width: 750px) {
+    width: 60px;
+  }
 `;
 
 export function Footer() {
   return (
     <FooterWrap>
       {/* <div style={{ width: 250 }} /> */}
-      <FooterLogoImgWrap>
+      {/* <FooterLogoImgWrap>
         <FooterLogoImg src={musicImg} />
-      </FooterLogoImgWrap>
+      </FooterLogoImgWrap> */}
       <FooterMusicInfor />
       <FooterOperations />
     </FooterWrap>

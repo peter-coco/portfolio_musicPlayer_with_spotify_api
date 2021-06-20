@@ -6,20 +6,49 @@ import { GlobalState } from "../../redux/reducer";
 const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
-  /* display: flex; */
-  flex-wrap: wrap;
+  display: flex;
+  /* flex-wrap: wrap; */
+  /* gap: 0px; */
+
+  overflow: scroll;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+    /* align-items: center; */
+  }
 `;
 
 const MainMusicList = styled.div`
-  width: 350px;
+  width: 300px;
   height: 80px;
   display: flex;
+  align-items: center;
   margin-right: 30px;
+  @media (max-width: 750px) {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-right: 0%;
+  }
+  @media (max-width: 350px) {
+    height: 35px;
+    margin-bottom: 15px;
+  }
 `;
 const MainMusicListImg = styled.img`
-  width: 80px;
-  height: 80px;
-  margin-right: 40px;
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  @media (max-width: 750px) {
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+  }
+  @media (max-width: 350px) {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+  }
 `;
 const MainMusicListSubscription = styled.div`
   display: flex;
@@ -28,11 +57,26 @@ const MainMusicListSubscription = styled.div`
 `;
 const MainMusicListTitle = styled.div`
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
+  @media (max-width: 750px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 13px;
+  }
 `;
 const MainMusicListArtistNAlbum = styled.div`
   color: #cacaca;
-  font-size: 24px;
+  font-size: 20px;
+  /* width: 100%; */
+  @media (max-width: 750px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 13px;
+  }
 `;
 
 function MainMusicLists({
@@ -66,6 +110,10 @@ export function MainRecommandedList() {
     [`${albumImg}`, "yellow1", "cold play", "parachutes"],
     [`${albumImg}`, "yellow2", "cold play", "parachutes"],
     [`${albumImg}`, "yellow3", "cold play", "parachutes"],
+    [`${albumImg}`, "yellow4", "cold play", "parachutes"],
+    [`${albumImg}`, "yellow4", "cold play", "parachutes"],
+    [`${albumImg}`, "yellow4", "cold play", "parachutes"],
+    [`${albumImg}`, "yellow4", "cold play", "parachutes"],
     [`${albumImg}`, "yellow4", "cold play", "parachutes"],
   ];
 

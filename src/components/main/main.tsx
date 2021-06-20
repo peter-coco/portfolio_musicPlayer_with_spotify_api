@@ -12,6 +12,8 @@ const MainWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 const MainContentsWrap = styled.div`
@@ -27,17 +29,41 @@ const MainContentsTitle = styled.div`
   width: 300px;
   height: 60px;
   margin-bottom: 50px;
+  @media (max-width: 750px) {
+    width: 200px;
+    height: 40px;
+    margin-bottom: 35px;
+  }
+
+  @media (max-width: 350px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const MainContentsTitleText = styled.div`
   color: #fff;
   font-size: 40px;
   margin-bottom: 0px;
+  @media (max-width: 750px) {
+    font-size: 25px;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 20px;
+  }
 `;
 
 const MainContentsTitleUnderbar = styled.div`
   width: 100%;
   height: 5px;
+
+  @media (max-width: 750px) {
+    height: 3px;
+  }
+
+  @media (max-width: 350px) {
+    height: 2px;
+  }
 `;
 
 function Maintitle({ title, barColor }: { title: string; barColor: string }) {
