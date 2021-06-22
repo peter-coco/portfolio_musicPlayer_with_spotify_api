@@ -8,6 +8,11 @@ import { Main } from "./components/main/main";
 
 import styled from "styled-components";
 import { Provider } from "react-redux";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+
 import store from "./redux";
 
 const BackgroundWrap = styled.div`
@@ -22,14 +27,17 @@ const BackgroundWrap = styled.div`
   );
 `;
 
+const code = new URLSearchParams(window.location.search).get("code");
+
 function App() {
   return (
     <Provider store={store}>
-      <BackgroundWrap>
+      code ? <Dashboard code={code} /> : <Login />
+      {/* <BackgroundWrap>
         <Navbar />
         <Main />
         <Footer />
-      </BackgroundWrap>
+      </BackgroundWrap> */}
     </Provider>
   );
 }
