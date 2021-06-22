@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function useAuth(code) {
+export default function useAuth(code: string) {
   const [accessToken, setAcceessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState();
-  const [expiresIn, setExpiresIn] = useState();
+  const [refreshToken, setRefreshToken] = useState("");
+  const [expiresIn, setExpiresIn] = useState(0);
 
   useEffect(() => {
     axios
@@ -17,10 +17,10 @@ export default function useAuth(code) {
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
         // setExpiresIn(61);
-        window.history.pushState({}, null, "/");
+        window.history.pushState({}, "/", null);
       })
       .catch(() => {
-        window.location = "/";
+        window.location.href = "/";
       });
   }, [code]);
 
@@ -41,7 +41,8 @@ export default function useAuth(code) {
           // window.history.pushState({}, null, "/");
         })
         .catch(() => {
-          window.location = "/";
+          window.location.href = "/";
+          // js : window.location
         });
     }, (expiresIn - 60) * 1000);
 

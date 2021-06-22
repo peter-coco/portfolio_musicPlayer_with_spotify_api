@@ -3,11 +3,13 @@ import Actions from "./actions";
 export interface GlobalState {
   mainContentsModeIdx: number;
   musicList: string[];
+  entraceCode: string;
 }
 
 const initialState: GlobalState = {
   mainContentsModeIdx: 0,
   musicList: [],
+  entraceCode: "",
 };
 
 /**
@@ -30,8 +32,10 @@ function reducer(
   switch (action.type) {
     case Actions.MAIN_CONTENTS_MODE_CHANGE:
       return { ...state, mainContentsModeIdx: action.payload.modeNum };
-    case Actions.RESET_MUSIC_LIST:
-      return { ...state, musicList: action.payload.listFromApi };
+    case Actions.SET_API_ENTRACE_CODE:
+      return { ...state, entraceCode: action.payload.apiEntraceCode };
+    // case Actions.RESET_MUSIC_LIST:
+    //   return { ...state, musicList: action.payload.listFromApi };
     // case Actions.PLUS:
     //    state.b++; --> usestate처럼 새로운 객체로 반환해줘야한다.
     //   return { ...state, b: state.b + 1 };

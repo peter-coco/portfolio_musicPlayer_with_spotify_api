@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import albumImg from "../../image/navbar-logo.png";
 import { GlobalState } from "../../redux/reducer";
-
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
 
@@ -118,21 +116,13 @@ function MainMusicLists({
   );
 }
 
-export function MainRecommandedList({ code }: { code: string }) {
-  // dummy data --> 추후 api에서 데이터 받아서 전송할것임.
-  // const musicListdata = [
-  //   // 제목, 가수, 앨범
-  //   [`${albumImg}`, "yellow1", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow2", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow3", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow4", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow4", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow4", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow4", "cold play", "parachutes"],
-  //   [`${albumImg}`, "yellow4", "cold play", "parachutes"],
-  // ];
-
-  const accessToken = useAuth(code);
+export function MainRecommandedList() {
+  const entraceCode = useSelector<GlobalState, string>(
+    (state) => state.entraceCode
+  );
+  // console.log(`entrace code : ${entraceCode}`);
+  // console.log(`code : ${code}`);
+  const accessToken = useAuth(entraceCode);
   const [search, setSearch] = useState<string>("yellow");
   const [searchResults, setSearchResults] = useState<Music[]>([]);
 
@@ -146,34 +136,16 @@ export function MainRecommandedList({ code }: { code: string }) {
     if (!accessToken) return;
 
     spotifyApi.searchTracks(search).then((res) => {
-      console.log(res.body.tracks?.items);
+      // console.log(res.body.tracks?.items);
       const list = res.body.tracks?.items.map((track) => {
         return {
           title: track.name,
           artist: track.artists[0].name,
           album: track.album.name,
           albumImg: track.album.images[0].url,
-          // titile: track?.name,
-          // album : track.album.
-          // albumUrl: track.album.images[0],
         };
       }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-      setSearchResults(
-        list ? list : []
-        // ["a", "b", "c"]
-        // res.body.tracks?.items.map((track) => track.name) // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-        // const list = res.body.tracks?.items.map((track) => track.name); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-        // console.log(list ? list[0] : null);
-        // res.body.tracks?.items.map((track) => {
-        //   return {
-        //     title : track.name,
-        //     // artist: track.artists[0].name,
-        //     // titile: track?.name,
-        //     // album : track.album.
-        //     // albumUrl: track.album.images[0],
-        //   };
-        // })
-      );
+      setSearchResults(list ? list : []);
     });
   }, [search, accessToken]);
 

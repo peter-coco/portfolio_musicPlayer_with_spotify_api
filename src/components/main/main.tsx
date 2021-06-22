@@ -75,7 +75,7 @@ function Maintitle({ title, barColor }: { title: string; barColor: string }) {
   );
 }
 
-export function Main({ code }: { code: string }) {
+export function Main() {
   // const mode = useSelector;
   const mainModeIdx = useSelector<GlobalState, number>(
     (state) => state.mainContentsModeIdx
@@ -92,7 +92,7 @@ export function Main({ code }: { code: string }) {
           barColor={titleUnderBarColor[mainModeIdx]}
         />
         <MainGenre />
-        <MainRecommandedList code={code} />
+        <MainRecommandedList />
       </MainContentsWrap>
       {/* <MainPlayingList /> */}
     </MainWrap>
