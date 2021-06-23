@@ -6,13 +6,6 @@ import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
 import Actions from "../../redux/actions";
 
-// export enum SortType {
-//   TITLES,
-//   ARTISTS,
-//   ALBUMS,
-//   POPULARITY,
-// }
-
 export const spotifyApi = new SpotifyWebApi({
   clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
 });
@@ -93,6 +86,11 @@ const MainMusicListArtistNAlbum = styled.div`
   }
 `;
 
+const MainMusicSubFunc = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 function MainMusicLists({
   albumCover,
   songTitle,
@@ -113,6 +111,7 @@ function MainMusicLists({
           {artist} / {albumTitle}
         </MainMusicListArtistNAlbum>
       </MainMusicListSubscription>
+      <MainMusicSubFunc />
     </MainMusicList>
   );
 }
@@ -170,22 +169,20 @@ export function MainRecommandedList() {
   useEffect(() => {
     // if (!search) return setSearchResults([]);
     if (!accessToken) return;
-    spotifyApi.getAvailableGenreSeeds().then(
-      function (data) {
-        let genreSeeds = data.body;
-        console.log(genreSeeds);
-      },
-      function (err) {
-        console.log("Something went wrong!", err);
-      }
-    );
+    // spotifyApi.getAvailableGenreSeeds().then(
+    //   function (data) {
+    //     let genreSeeds = data.body;
+    //     console.log(genreSeeds);
+    //   },
+    //   function (err) {
+    //     console.log("Something went wrong!", err);
+    //   }
+    // );
 
+    // 검색을 하고나서 다시 여기를 했을 때 잘 안먹히네...??
     spotifyApi
       .getRecommendations({
-        // min_energy: 0.4,
-        // seed_artists: ["6mfK6Q2tzLMEchAr0e9Uzu", "4DYFVNKZ1uixa6SQTvzQwJ"],
         seed_genres: [`${selectedMusicGenre}`],
-        // min_popularity: 1,
       })
       .then((res) => {
         // console.log(res.body.tracks[0]);

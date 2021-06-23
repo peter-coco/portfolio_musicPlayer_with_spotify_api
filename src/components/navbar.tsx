@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Actions from "../redux/actions";
 import { GlobalState, Music } from "../redux/reducer";
-import { spotifyApi } from "./main/main-musiclist";
+import OnOutsiceClick from "react-outclick";
 
 const NavbarWrap = styled.div`
   width: 100%;
@@ -90,6 +90,7 @@ const NavbarMenus = () => {
         onClick={() => {
           dispatch({
             type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_SEARCH,
+            payload: { searchBarOnOff: true },
           });
         }}
       />
@@ -113,7 +114,9 @@ const NavbarSearchBar = () => {
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            dispatch({ type: Actions.SET_SEARCH_ENTER_ACTIVATED });
+            dispatch({
+              type: Actions.SET_SEARCH_ENTER_ACTIVATED,
+            });
           }
         }}
       />
@@ -129,10 +132,34 @@ export default function Navbar() {
   const searchBarOnOff = useSelector<GlobalState, boolean>(
     (state) => state.searchBarOnOff
   );
+  const dispatch = useDispatch();
+  // const [operationActivate, setOperationActivate] = useState<boolean>(false);
+
+  // const subMenuClickToggleFunc = useCallback(
+  //   (area: string) => {
+  //     if (area === "inSide") setOperationActivate((pre) => !pre);
+  //     else if (operationActivate)
+  //       dispatch({
+  //         type: Actions.SET_SEARCH_ENTER_ACTIVATED,
+  //         payload: { searchBarOnOff: true },
+  //       });
+  //   },
+  //   [searchBarOnOff]
+  // );
 
   return searchBarOnOff ? (
     <NavbarWrap>
-      <NavbarSearchBar />
+      <OnOutsiceClick
+        onOutsideClick={() => {
+          console.log("hi");
+          dispatch({
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_SEARCH,
+            payload: { searchBarOnOff: false },
+          });
+        }}
+      >
+        <NavbarSearchBar />
+      </OnOutsiceClick>
     </NavbarWrap>
   ) : (
     <NavbarWrap>

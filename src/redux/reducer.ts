@@ -78,7 +78,7 @@ function reducer(
       return {
         ...state,
         mainContentsModeIdx: 0,
-        searchBarOnOff: !state.searchBarOnOff,
+        searchBarOnOff: action.payload.searchBarOnOff,
       };
     case Actions.SET_API_ENTRACE_CODE:
       return { ...state, entraceCode: action.payload.apiEntraceCode };
@@ -93,6 +93,7 @@ function reducer(
         searchBarEnterOnOff: !state.searchBarEnterOnOff,
         nameOfTitle: `search result : ${state.searchResult}`,
         colorOfTitleBar: "#D96BC1",
+        searchBarOnOff: false,
       };
     case Actions.SET_TRACK_LIST:
       return {
