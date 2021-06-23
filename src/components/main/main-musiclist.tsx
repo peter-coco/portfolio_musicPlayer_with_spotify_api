@@ -10,6 +10,14 @@ export interface Music {
   artist: string;
   album: string;
   albumImg: string;
+  popularity: number;
+}
+
+export enum SortType {
+  TITLES,
+  ARTISTS,
+  ALBUMS,
+  POPULARITY,
 }
 
 const spotifyApi = new SpotifyWebApi({
@@ -120,10 +128,13 @@ export function MainRecommandedList() {
   const entraceCode = useSelector<GlobalState, string>(
     (state) => state.entraceCode
   );
+  const selectedMusicGenre = useSelector<GlobalState>(
+    (state) => state.selectedMusicGenre
+  );
   // console.log(`entrace code : ${entraceCode}`);
   // console.log(`code : ${code}`);
   const accessToken = useAuth(entraceCode);
-  const [search, setSearch] = useState<string>("yellow");
+  const [search, setSearch] = useState<string>("a");
   const [searchResults, setSearchResults] = useState<Music[]>([]);
 
   useEffect(() => {
@@ -135,19 +146,57 @@ export function MainRecommandedList() {
     if (!search) return setSearchResults([]);
     if (!accessToken) return;
 
-    spotifyApi.searchTracks(search).then((res) => {
-      // console.log(res.body.tracks?.items);
-      const list = res.body.tracks?.items.map((track) => {
-        return {
-          title: track.name,
-          artist: track.artists[0].name,
-          album: track.album.name,
-          albumImg: track.album.images[0].url,
-        };
-      }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-      setSearchResults(list ? list : []);
-    });
+    // spotifyApi.searchTracks(search).then((res) => {
+    //   // 20개만 반환하네..??
+    //   console.log(res.body.tracks?.items);
+    //   const list = res.body.tracks?.items.map((track) => {
+    //     return {
+    //       title: track.name,
+    //       artist: track.artists[0].name,
+    //       album: track.album.name,
+    //       albumImg: track.album.images[0].url,
+    //       popularity: track.popularity,
+    //     };
+    //   }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
+    //   setSearchResults(list ? list : []);
+    // });
   }, [search, accessToken]);
+
+  useEffect(() => {
+    if (!search) return setSearchResults([]);
+    if (!accessToken) return;
+
+    spotifyApi.getAvailableGenreSeeds().then(
+      function (data) {
+        let genreSeeds = data.body;
+        console.log(genreSeeds);
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
+
+    spotifyApi
+      .getRecommendations({
+        // min_energy: 0.4,
+        // seed_artists: ["6mfK6Q2tzLMEchAr0e9Uzu", "4DYFVNKZ1uixa6SQTvzQwJ"],
+        seed_genres: [`${selectedMusicGenre}`],
+        // min_popularity: 1,
+      })
+      .then((res) => {
+        // console.log(res.body.tracks[0]);
+        const list = res.body.tracks.map((track) => {
+          return {
+            title: track.name,
+            artist: track.artists[0].name,
+            album: "track.album.name",
+            albumImg: "track.album.images[0].url,",
+            popularity: 30,
+          };
+        }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
+        setSearchResults(list ? list : []);
+      });
+  }, [selectedMusicGenre, accessToken]);
 
   const mainModeIdx = useSelector<GlobalState>(
     (state) => state.mainContentsModeIdx
@@ -155,15 +204,20 @@ export function MainRecommandedList() {
 
   return (
     <MainMusicListWrap style={{ display: mainModeIdx === 0 ? "flex" : "none" }}>
-      {searchResults.map((e) => (
-        <MainMusicLists
-          key={e.title + e.artist + e.album}
-          albumCover={e.albumImg}
-          songTitle={e.title}
-          artist={e.artist}
-          albumTitle={e.album}
-        />
-      ))}
+      {searchResults
+        // .filter()
+        .sort((a, b) => {
+          return b.popularity - a.popularity;
+        })
+        .map((e) => (
+          <MainMusicLists
+            key={e.title + e.artist + e.album}
+            albumCover={e.albumImg}
+            songTitle={e.title}
+            artist={e.artist}
+            albumTitle={e.album}
+          />
+        ))}
     </MainMusicListWrap>
   );
 }

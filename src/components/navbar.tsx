@@ -28,12 +28,27 @@ const NavbarMenu = styled.i`
   font-size: 25px;
   line-height: 30px;
   color: #fff;
+  cursor: pointer;
   @media (max-width: 750px) {
     font-size: 20px;
   }
   @media (max-width: 350px) {
     font-size: 15px;
   }
+`;
+
+const NavbarSearchBarWrap = styled.div`
+  width: 560px;
+  height: 30px;
+`;
+
+const NavbarSearchBarEnter = styled.i`
+  width: 30px;
+  height: 30px;
+`;
+const NavbarSearchBarInput = styled.input`
+  width: 400px;
+  height: 100%;
 `;
 
 const NavbarMenus = () => {
@@ -47,9 +62,21 @@ const NavbarMenus = () => {
       <NavbarMenu
         className="fas fa-home"
         onClick={() => {
+          // dispatch({
+          //   type: Actions.CHANGE_MAIN_CONTENTS_MODE,
+          //   payload: {
+          //     modeNum: 0,
+          //     colorOfTitleBar: "#72B1C5",
+          //     nameOfTitle: "Recommand",
+          //   },
+          // });
           dispatch({
-            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
-            payload: { modeNum: 0 },
+            type: Actions.CHOICE_MUSIC_GENRE,
+            payload: {
+              musicGenre: "pop",
+              nameOfTitle: "Recommand",
+              colorOfTitleBar: "#72B1C5",
+            },
           });
         }}
       />
@@ -57,8 +84,12 @@ const NavbarMenus = () => {
         className="fas fa-chart-bar"
         onClick={() => {
           dispatch({
-            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
-            payload: { modeNum: 1 },
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE,
+            payload: {
+              modeNum: 1,
+              colorOfTitleBar: "#7972C5",
+              nameOfTitle: "Genre",
+            },
           });
         }}
       />
@@ -66,8 +97,12 @@ const NavbarMenus = () => {
         className="fas fa-list-alt"
         onClick={() => {
           dispatch({
-            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
-            payload: { modeNum: 2 },
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE,
+            payload: {
+              modeNum: 2,
+              colorOfTitleBar: "#D96BC1",
+              nameOfTitle: "MyPlayList",
+            },
           });
         }}
       />
@@ -75,12 +110,20 @@ const NavbarMenus = () => {
         className="fas fa-search"
         onClick={() => {
           dispatch({
-            type: Actions.MAIN_CONTENTS_MODE_CHANGE,
-            payload: { modeNum: 3 },
+            type: Actions.SET_SEARCH_MODE_ONOFF,
           });
         }}
       />
     </NavbarMenusWrap>
+  );
+};
+
+const NavbarSearchBar = () => {
+  return (
+    <NavbarSearchBarWrap>
+      <NavbarSearchBarEnter />
+      <NavbarSearchBarInput />
+    </NavbarSearchBarWrap>
   );
 };
 
@@ -89,8 +132,15 @@ export default function Navbar() {
   //   state.a,
   //   state.b,
   // ]);
+  const searchBarOnOff = useSelector<GlobalState, boolean>(
+    (state) => state.searchBarOnOff
+  );
 
-  return (
+  return searchBarOnOff ? (
+    <NavbarWrap>
+      <NavbarSearchBar />
+    </NavbarWrap>
+  ) : (
     <NavbarWrap>
       <NavbarMenus />
     </NavbarWrap>

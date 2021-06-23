@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../../redux/reducer";
+import Actions from "../../redux/actions";
+import { useCallback } from "react";
 
 const MainGenreWrap = styled.div`
   width: 100%;
@@ -17,6 +19,7 @@ const MainGenreList = styled.div`
   margin-right: 50px;
   text-align: center;
   line-height: 50px;
+  cursor: pointer;
   @media (max-width: 750px) {
     width: 130px;
     height: 40px;
@@ -26,20 +29,41 @@ const MainGenreList = styled.div`
 `;
 
 function MainGenreLists({ musicGenre }: { musicGenre: string }) {
-  return <MainGenreList>{musicGenre}</MainGenreList>;
+  const dispatch = useDispatch();
+  // const selectMusicGenreFunc = useCallback(() => {
+  //   dispatch({
+  //     type: Actions.CHOICE_MUSIC_GENRE,
+  //     payload: { genre: musicGenre },
+  //   });
+  // })
+
+  return (
+    <MainGenreList
+      onClick={() => {
+        // go to Genre music lists
+        // console.log(`click genre : ${musicGenre}`);
+        dispatch({
+          type: Actions.CHOICE_MUSIC_GENRE,
+          payload: { genre: musicGenre, nameOfTitle: musicGenre },
+        });
+      }}
+    >
+      {musicGenre}
+    </MainGenreList>
+  );
 }
 
 export function MainGenre() {
   const genreLists = [
-    "K-pop",
+    "k-pop",
     "pop",
-    "J-pop",
+    "j-pop",
     "rock",
-    "classic",
+    "classical",
     "jazz",
-    "ballad",
-    "Edm",
-    "Etc",
+    "dance",
+    "edm",
+    "acoustic",
   ];
 
   const mainModeIdx = useSelector<GlobalState>(
