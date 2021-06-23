@@ -1,7 +1,9 @@
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Actions from "../redux/actions";
-import { GlobalState } from "../redux/reducer";
+import { GlobalState, Music } from "../redux/reducer";
+import { spotifyApi } from "./main/main-musiclist";
 
 const NavbarWrap = styled.div`
   width: 100%;
@@ -52,9 +54,9 @@ const NavbarSearchBarInput = styled.input`
 `;
 
 const NavbarMenus = () => {
-  const mainModeIdx = useSelector<GlobalState>(
-    (state) => state.mainContentsModeIdx
-  );
+  // const mainModeIdx = useSelector<GlobalState>(
+  //   (state) => state.mainContentsModeIdx
+  // );
   const dispatch = useDispatch();
 
   return (
@@ -62,21 +64,8 @@ const NavbarMenus = () => {
       <NavbarMenu
         className="fas fa-home"
         onClick={() => {
-          // dispatch({
-          //   type: Actions.CHANGE_MAIN_CONTENTS_MODE,
-          //   payload: {
-          //     modeNum: 0,
-          //     colorOfTitleBar: "#72B1C5",
-          //     nameOfTitle: "Recommand",
-          //   },
-          // });
           dispatch({
-            type: Actions.CHOICE_MUSIC_GENRE,
-            payload: {
-              musicGenre: "pop",
-              nameOfTitle: "Recommand",
-              colorOfTitleBar: "#72B1C5",
-            },
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_MAIN,
           });
         }}
       />
@@ -84,12 +73,7 @@ const NavbarMenus = () => {
         className="fas fa-chart-bar"
         onClick={() => {
           dispatch({
-            type: Actions.CHANGE_MAIN_CONTENTS_MODE,
-            payload: {
-              modeNum: 1,
-              colorOfTitleBar: "#7972C5",
-              nameOfTitle: "Genre",
-            },
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_GENRE,
           });
         }}
       />
@@ -97,12 +81,7 @@ const NavbarMenus = () => {
         className="fas fa-list-alt"
         onClick={() => {
           dispatch({
-            type: Actions.CHANGE_MAIN_CONTENTS_MODE,
-            payload: {
-              modeNum: 2,
-              colorOfTitleBar: "#D96BC1",
-              nameOfTitle: "MyPlayList",
-            },
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_MYLIST,
           });
         }}
       />
@@ -110,7 +89,7 @@ const NavbarMenus = () => {
         className="fas fa-search"
         onClick={() => {
           dispatch({
-            type: Actions.SET_SEARCH_MODE_ONOFF,
+            type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_SEARCH,
           });
         }}
       />
@@ -119,10 +98,25 @@ const NavbarMenus = () => {
 };
 
 const NavbarSearchBar = () => {
+  // const [inputText, setInputText] = useState("");
+
+  const dispatch = useDispatch();
   return (
     <NavbarSearchBarWrap>
       <NavbarSearchBarEnter />
-      <NavbarSearchBarInput />
+      <NavbarSearchBarInput
+        onChange={(e) => {
+          dispatch({
+            type: Actions.SET_SEARCH_RESULT,
+            payload: { searchResult: e.target.value },
+          });
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            dispatch({ type: Actions.SET_SEARCH_ENTER_ACTIVATED });
+          }
+        }}
+      />
     </NavbarSearchBarWrap>
   );
 };

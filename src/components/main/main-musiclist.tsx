@@ -1,26 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GlobalState } from "../../redux/reducer";
+import { GlobalState, Music } from "../../redux/reducer";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
+import Actions from "../../redux/actions";
 
-export interface Music {
-  title: string;
-  artist: string;
-  album: string;
-  albumImg: string;
-  popularity: number;
-}
+// export enum SortType {
+//   TITLES,
+//   ARTISTS,
+//   ALBUMS,
+//   POPULARITY,
+// }
 
-export enum SortType {
-  TITLES,
-  ARTISTS,
-  ALBUMS,
-  POPULARITY,
-}
-
-const spotifyApi = new SpotifyWebApi({
+export const spotifyApi = new SpotifyWebApi({
   clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
 });
 
@@ -125,17 +118,27 @@ function MainMusicLists({
 }
 
 export function MainRecommandedList() {
+  const dispatch = useDispatch();
   const entraceCode = useSelector<GlobalState, string>(
     (state) => state.entraceCode
   );
-  const selectedMusicGenre = useSelector<GlobalState>(
+  const selectedMusicGenre = useSelector<GlobalState, string>(
     (state) => state.selectedMusicGenre
+  );
+  const searchResult = useSelector<GlobalState, string>(
+    (state) => state.searchResult
+  );
+  const searchBarEnterOnOff = useSelector<GlobalState, boolean>(
+    (state) => state.searchBarEnterOnOff
+  );
+  const trackList = useSelector<GlobalState, Music[]>(
+    (state) => state.trackList
   );
   // console.log(`entrace code : ${entraceCode}`);
   // console.log(`code : ${code}`);
   const accessToken = useAuth(entraceCode);
-  const [search, setSearch] = useState<string>("a");
-  const [searchResults, setSearchResults] = useState<Music[]>([]);
+  // const [search, setSearch] = useState<string>("a");
+  // const [searchResults, setSearchResults] = useState<Music[]>([]);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -143,29 +146,30 @@ export function MainRecommandedList() {
   }, [accessToken]);
 
   useEffect(() => {
-    if (!search) return setSearchResults([]);
-    if (!accessToken) return;
-
-    // spotifyApi.searchTracks(search).then((res) => {
-    //   // 20개만 반환하네..??
-    //   console.log(res.body.tracks?.items);
-    //   const list = res.body.tracks?.items.map((track) => {
-    //     return {
-    //       title: track.name,
-    //       artist: track.artists[0].name,
-    //       album: track.album.name,
-    //       albumImg: track.album.images[0].url,
-    //       popularity: track.popularity,
-    //     };
-    //   }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-    //   setSearchResults(list ? list : []);
-    // });
-  }, [search, accessToken]);
+    if (!searchResult) return;
+    // console.log(trackList);
+    console.log(searchResult);
+    spotifyApi.searchTracks(searchResult).then((res) => {
+      const list = res.body.tracks?.items.map((track) => {
+        return {
+          title: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          albumImg: track.album.images[0].url,
+          popularity: track.popularity,
+        };
+      }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
+      dispatch({
+        type: Actions.SET_TRACK_LIST,
+        payload: { trackList: list ? list : [] },
+      });
+      // console.log(trackList, list);
+    });
+  }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    if (!search) return setSearchResults([]);
+    // if (!search) return setSearchResults([]);
     if (!accessToken) return;
-
     spotifyApi.getAvailableGenreSeeds().then(
       function (data) {
         let genreSeeds = data.body;
@@ -194,7 +198,11 @@ export function MainRecommandedList() {
             popularity: 30,
           };
         }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
-        setSearchResults(list ? list : []);
+        // setSearchResults(list ? list : []);
+        dispatch({
+          type: Actions.SET_TRACK_LIST,
+          payload: { trackList: list ? list : [] },
+        });
       });
   }, [selectedMusicGenre, accessToken]);
 
@@ -204,7 +212,7 @@ export function MainRecommandedList() {
 
   return (
     <MainMusicListWrap style={{ display: mainModeIdx === 0 ? "flex" : "none" }}>
-      {searchResults
+      {trackList
         // .filter()
         .sort((a, b) => {
           return b.popularity - a.popularity;
