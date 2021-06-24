@@ -24,10 +24,12 @@ export interface GlobalState {
   trackNow: Music;
 }
 
+const code = new URLSearchParams(window.location.search).get("code") ?? "";
+
 const initialState: GlobalState = {
   mainContentsModeIdx: 0,
   musicList: [],
-  entraceCode: "",
+  entraceCode: code,
   accessTokenNow: "",
   selectedMusicGenre: "pop",
   nameOfTitle: "Recommand",

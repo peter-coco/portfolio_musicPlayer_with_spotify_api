@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Actions from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 export default function useAuth(code: string) {
+  // if (!code) return null;
   const [accessToken, setAcceessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [expiresIn, setExpiresIn] = useState(0);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     axios
       .post("http://localhost:3001/login", {
@@ -17,10 +21,12 @@ export default function useAuth(code: string) {
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
         // setExpiresIn(61);
-        window.history.pushState({}, "/", null);
       })
       .catch(() => {
-        window.location.href = "/";
+        dispatch({
+          type: Actions.SET_API_ENTRACE_CODE,
+          payload: { apiEntraceCode: "" },
+        });
       });
   }, [code]);
 
@@ -41,7 +47,7 @@ export default function useAuth(code: string) {
           // window.history.pushState({}, null, "/");
         })
         .catch(() => {
-          window.location.href = "/";
+          // window.location.href = "/";
           // js : window.location
         });
     }, (expiresIn - 60) * 1000);
@@ -50,4 +56,10 @@ export default function useAuth(code: string) {
   }, [refreshToken, expiresIn]);
 
   return accessToken;
+}
+function dispatch(arg0: {
+  type: Actions;
+  payload: { apiEntraceCode: string };
+}) {
+  throw new Error("Function not implemented.");
 }

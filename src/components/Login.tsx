@@ -8,13 +8,24 @@ export default function Login() {
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: "100vh" }}
+      style={{
+        minHeight: "100vh",
+        minWidth: "100vw",
+        background: `linear-gradient(
+                      90deg,
+                      #38adae -1.77%,
+                      #cd295a 103.5%,
+                      rgba(254, 144, 175, 0) 103.51%
+                    )`,
+      }}
     >
-      <a className="btn btn-success btn-lg" href={AUTH_URL}>
+      <a
+        className="btn btn-success btn-lg"
+        href={AUTH_URL}
+        style={{ backgroundColor: "#1b1b1b", border: "0px" }}
+      >
         Login With Spotify
       </a>
-      
     </Container>
   );
 }
-

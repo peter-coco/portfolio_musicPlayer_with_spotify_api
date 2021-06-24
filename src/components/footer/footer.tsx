@@ -46,7 +46,7 @@ const FooterLogoImgWrap = styled.div`
   }
 `;
 
-export function Footer() {
+export const Footer = () => {
   const trackNow = useSelector<GlobalState, Music>((state) => state.trackNow);
   const [accessTokenNow] = useSelector<GlobalState, [string]>((state) => [
     state.accessTokenNow,
@@ -75,4 +75,4 @@ export function Footer() {
       uris={trackNow.url ? [trackNow.url] : []}
     />
   );
-}
+};

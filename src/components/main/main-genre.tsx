@@ -28,7 +28,7 @@ const MainGenreList = styled.div`
   }
 `;
 
-function MainGenreLists({ musicGenre }: { musicGenre: string }) {
+const MainGenreLists = ({ musicGenre }: { musicGenre: string }) => {
   const dispatch = useDispatch();
 
   return (
@@ -45,9 +45,9 @@ function MainGenreLists({ musicGenre }: { musicGenre: string }) {
       {musicGenre}
     </MainGenreList>
   );
-}
+};
 
-export function MainGenre() {
+export const MainGenre = () => {
   const genreLists = [
     "k-pop",
     "pop",
@@ -71,4 +71,4 @@ export function MainGenre() {
       ))}
     </MainGenreWrap>
   );
-}
+};

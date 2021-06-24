@@ -83,7 +83,7 @@ const MusicListSubsEtc = styled.div`
   color: #cacaca;
 `;
 
-function MusicLists({
+const MusicLists = ({
   albumCover,
   songTitle,
   artist,
@@ -93,7 +93,7 @@ function MusicLists({
   songTitle: string;
   artist: string;
   albumTitle: string;
-}) {
+}) => {
   return (
     <MusicList>
       <MusicListImage src={albumCover}></MusicListImage>
@@ -105,9 +105,9 @@ function MusicLists({
       </MusicListSubscription>
     </MusicList>
   );
-}
+};
 
-function MusicPlayinglistNLyric() {
+const MusicPlayinglistNLyric = () => {
   // dummy data --> 추후 api에서 데이터 받아서 전송할것임.
   const musicListdata = [
     // 제목, 가수, 앨범
@@ -136,13 +136,13 @@ function MusicPlayinglistNLyric() {
       </MusicListNLyricBottom>
     </MusicListNLyricWrap>
   );
-}
+};
 
-export function MainPlayingList() {
+export const MainPlayingList = () => {
   return (
     <MainPlayingListWrap>
       <PlayingMusicImg src={playingMusicImg} />
       <MusicPlayinglistNLyric />
     </MainPlayingListWrap>
   );
-}
+};

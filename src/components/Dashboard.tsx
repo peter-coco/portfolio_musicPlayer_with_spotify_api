@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "../redux/actions";
 
 import styled from "styled-components";
 
-import Navbar from "./navbar";
+import { Navbar } from "./navbar";
 import { Footer } from "./footer/footer";
 import { Main } from "./main/main";
+import { useEffect } from "react";
 
 const BackgroundWrap = styled.div`
   width: 100vw;
@@ -23,10 +23,17 @@ const BackgroundWrap = styled.div`
 export default function Dashboard({ code }: { code: string }) {
   const dispatch = useDispatch();
 
-  dispatch({
-    type: Actions.SET_API_ENTRACE_CODE,
-    payload: { apiEntraceCode: code },
-  });
+  useEffect(() => {
+    dispatch({
+      type: Actions.SET_API_ENTRACE_CODE,
+      payload: { apiEntraceCode: code },
+    });
+  }, [code]);
+
+  // dispatch({
+  //   type: Actions.SET_API_ENTRACE_CODE,
+  //   payload: { apiEntraceCode: code },
+  // });
 
   return (
     <BackgroundWrap>

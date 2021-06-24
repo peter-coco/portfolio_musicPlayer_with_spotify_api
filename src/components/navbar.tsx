@@ -124,7 +124,7 @@ const NavbarSearchBar = () => {
   );
 };
 
-export default function Navbar() {
+export const Navbar = () => {
   // const [a, b] = useSelector<GlobalState, [string, number]>((state) => [
   //   state.a,
   //   state.b,
@@ -152,4 +152,4 @@ export default function Navbar() {
       <NavbarMenus />
     </NavbarWrap>
   );
-}
+};

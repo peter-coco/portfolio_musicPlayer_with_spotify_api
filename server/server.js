@@ -32,10 +32,6 @@ app.post("/refresh", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  // res.header({
-  //   "Access-Control-Allow-Origin": "*",
-  // });
-
   const code = req.body.code;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: "http://localhost:3000",

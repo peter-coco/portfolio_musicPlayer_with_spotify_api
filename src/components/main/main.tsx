@@ -66,16 +66,22 @@ const MainContentsTitleUnderbar = styled.div`
   }
 `;
 
-function Maintitle({ title, barColor }: { title: string; barColor: string }) {
+const Maintitle = ({
+  title,
+  barColor,
+}: {
+  title: string;
+  barColor: string;
+}) => {
   return (
     <MainContentsTitle>
       <MainContentsTitleText>{title}</MainContentsTitleText>
       <MainContentsTitleUnderbar style={{ backgroundColor: `${barColor}` }} />
     </MainContentsTitle>
   );
-}
+};
 
-export function Main() {
+export const Main = () => {
   const [nameOfTitle, colorOfTitleBar] = useSelector<
     GlobalState,
     [string, string]
@@ -91,4 +97,4 @@ export function Main() {
       {/* <MainPlayingList /> */}
     </MainWrap>
   );
-}
+};

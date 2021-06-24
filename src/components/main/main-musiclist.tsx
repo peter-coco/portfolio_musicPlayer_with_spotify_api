@@ -5,9 +5,12 @@ import { GlobalState, Music } from "../../redux/reducer";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
 import Actions from "../../redux/actions";
+import axios from "axios";
 
 export const spotifyApi = new SpotifyWebApi({
   clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
+  clientSecret: "eabebe089db44942bc912940c398c29a",
+  redirectUri: "http://localhost:3000",
 });
 
 const MainMusicListWrap = styled.div`
@@ -121,7 +124,7 @@ const MainMusicSubFunc = styled.i`
   }
 `;
 
-function MainMusicLists({
+const MainMusicLists = ({
   track,
   albumCover,
   songTitle,
@@ -133,7 +136,7 @@ function MainMusicLists({
   songTitle: string;
   artist: string;
   albumTitle: string;
-}) {
+}) => {
   const dispatch = useDispatch();
   return (
     <MainMusicList>
@@ -159,9 +162,9 @@ function MainMusicLists({
       </MainMusicSubFunctions>
     </MainMusicList>
   );
-}
+};
 
-export function MainRecommandedList() {
+export const MainRecommandedList = () => {
   const dispatch = useDispatch();
   const [
     entraceCode,
@@ -185,6 +188,7 @@ export function MainRecommandedList() {
   // console.log(`entrace code : ${entraceCode}`);
   // console.log(`code : ${code}`);
   const accessToken = useAuth(entraceCode);
+  // spotifyApi.setAccessToken(accessToken);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -221,6 +225,7 @@ export function MainRecommandedList() {
 
   useEffect(() => {
     if (!accessToken) return;
+    console.log("IN?", accessToken);
 
     // spotifyApi.getUserPlaylists("My playlist").then(
     //   function (data) {
@@ -233,7 +238,7 @@ export function MainRecommandedList() {
 
     // Create a private playlist
     // spotifyApi
-    //   .createPlaylist("My playlist", {
+    //   .createPlaylist("fjdkslafjsyydklfr", {
     //     description: "My description",
     //     // public: true,
     //   })
@@ -245,7 +250,23 @@ export function MainRecommandedList() {
     //       console.log("Something went wrong!", err);
     //     }
     //   );
+    async function t() {
+      const user_id = "cng5x2n87deht9u25pqbiunn2";
 
+      const { data } = await axios.post(
+        `https://api.spotify.com/v1/users/${user_id}/playlists`,
+        { name: "test" },
+        {
+          headers: {
+            authorization:
+              "Bearer " +
+              "BQAsxyDNBnnbUD-oRn01z5XAL9Vj6NcaIgb1MqUrCuweHoBKxXmTAGW-2QiwGktWNqVt2wgAKDiMZLIJwHsF73Bo_YV1YU8HZEtGQV0F4Gv5PSyzLMqdHqIe6MpD4XxCq63ZQw-pTyNtvMq3J3Qqfo9csdyJJ8318NQY9TA4JhNnWIpj3_49Xf1yW5e6MfgpycDEd4RlZ0yocZV-wYVKZV5fWChwfW7H",
+          },
+        }
+      );
+      console.log("hello", data);
+    }
+    t();
     // spotifyApi
     //   .addTracksToPlaylist("5ieJqeLJjjI8iJWaxeBLuK", [
     //     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
@@ -279,17 +300,19 @@ export function MainRecommandedList() {
         seed_genres: [`${selectedMusicGenre}`],
       })
       .then((res) => {
-        // console.log(res.body.tracks[0]);
-        const list = res.body.tracks.map((track) => {
-          return {
-            title: track.name,
-            artist: track.artists[0].name,
-            album: "track.album.name",
-            albumImg: "track.album.images[0].url,",
-            popularity: 30,
-            url: track.uri,
-          };
-        }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
+        console.log(res.body.tracks[0]);
+        const list = (res.body.tracks as SpotifyApi.TrackObjectFull[]).map(
+          (track) => {
+            return {
+              title: track.name,
+              artist: track.artists[0].name,
+              album: track.album.name,
+              albumImg: track.album.images[0].url,
+              popularity: 30,
+              url: track.uri,
+            };
+          }
+        ); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
         // setSearchResults(list ? list : []);
         dispatch({
           type: Actions.SET_TRACK_LIST,
@@ -317,4 +340,22 @@ export function MainRecommandedList() {
         ))}
     </MainMusicListWrap>
   );
-}
+};
+
+// type C = {
+//   a:number;
+// }
+
+// type D = {
+//   a:number;
+//   b:number;
+// }
+
+// let c:any = {
+//   a:5,
+//   b:7
+// }
+
+// let d:C =  c;
+
+// console.log((d as D).b)  // 확신이 있을 때 !!

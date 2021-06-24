@@ -51,7 +51,7 @@ const MusicInforTextEtc = styled.div`
   }
 `;
 
-export function FooterMusicInfor() {
+export const FooterMusicInfor = () => {
   const trackNow = useSelector<GlobalState, Music>((state) => state.trackNow);
 
   return (
@@ -65,4 +65,4 @@ export function FooterMusicInfor() {
       </MusicInforText>
     </MusicInforWrap>
   );
-}
+};

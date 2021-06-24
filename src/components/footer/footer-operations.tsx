@@ -28,7 +28,7 @@ const Operations = styled.i`
   }
 `;
 
-export function FooterOperations() {
+export const FooterOperations = () => {
   return (
     <FooterOperationWrap>
       <Operations className="fas fa-play" />
@@ -36,4 +36,4 @@ export function FooterOperations() {
       <Operations className="fas fa-thumbs-up" />
     </FooterOperationWrap>
   );
-}
+};
