@@ -6,12 +6,14 @@ export interface Music {
   album: string;
   albumImg: string;
   popularity: number;
+  url: string;
 }
 
 export interface GlobalState {
   mainContentsModeIdx: number;
   musicList: string[];
   entraceCode: string;
+  accessTokenNow: string;
   selectedMusicGenre: string;
   nameOfTitle: string;
   colorOfTitleBar: string;
@@ -19,12 +21,14 @@ export interface GlobalState {
   searchBarOnOff: boolean;
   searchBarEnterOnOff: boolean;
   trackList: Music[];
+  trackNow: Music;
 }
 
 const initialState: GlobalState = {
   mainContentsModeIdx: 0,
   musicList: [],
   entraceCode: "",
+  accessTokenNow: "",
   selectedMusicGenre: "pop",
   nameOfTitle: "Recommand",
   colorOfTitleBar: "#72B1C5",
@@ -32,6 +36,14 @@ const initialState: GlobalState = {
   searchBarOnOff: false,
   searchBarEnterOnOff: false,
   trackList: [],
+  trackNow: {
+    title: "",
+    artist: "",
+    album: "",
+    albumImg: "",
+    popularity: 0,
+    url: "",
+  },
 };
 
 /**
@@ -100,6 +112,11 @@ function reducer(
         ...state,
         trackList: action.payload.trackList,
       };
+    case Actions.SET_ACCEES_TOKEN_NOW:
+      return {
+        ...state,
+        accessTokenNow: action.payload.accessTokenNow,
+      };
     case Actions.CHOICE_MUSIC_GENRE:
       return {
         ...state,
@@ -107,6 +124,11 @@ function reducer(
         mainContentsModeIdx: 0,
         nameOfTitle: action.payload.nameOfTitle,
         colorOfTitleBar: action.payload.colorOfTitleBar,
+      };
+    case Actions.CHOICE_PLAY_MUSIC_NOW:
+      return {
+        ...state,
+        trackNow: action.payload.trackNow,
       };
     // case Actions.RESET_MUSIC_LIST:
     //   return { ...state, musicList: action.payload.listFromApi };

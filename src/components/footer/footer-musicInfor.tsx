@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import musicImg from "../../image/navbar-logo.png";
+import { GlobalState, Music } from "../../redux/reducer";
 
 const MusicInforWrap = styled.div`
   display: flex;
@@ -50,12 +52,16 @@ const MusicInforTextEtc = styled.div`
 `;
 
 export function FooterMusicInfor() {
+  const trackNow = useSelector<GlobalState, Music>((state) => state.trackNow);
+
   return (
     <MusicInforWrap>
-      <MusicInforImage src={musicImg} />
+      <MusicInforImage src={trackNow.albumImg} />
       <MusicInforText>
-        <MusicInforTextTitle>Yellow</MusicInforTextTitle>
-        <MusicInforTextEtc>ColdPlay / parachtes</MusicInforTextEtc>
+        <MusicInforTextTitle>{trackNow.title}</MusicInforTextTitle>
+        <MusicInforTextEtc>
+          {trackNow.artist} / {trackNow.album}
+        </MusicInforTextEtc>
       </MusicInforText>
     </MusicInforWrap>
   );

@@ -30,12 +30,6 @@ const MainGenreList = styled.div`
 
 function MainGenreLists({ musicGenre }: { musicGenre: string }) {
   const dispatch = useDispatch();
-  // const selectMusicGenreFunc = useCallback(() => {
-  //   dispatch({
-  //     type: Actions.CHOICE_MUSIC_GENRE,
-  //     payload: { genre: musicGenre },
-  //   });
-  // })
 
   return (
     <MainGenreList

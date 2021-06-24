@@ -133,20 +133,6 @@ export default function Navbar() {
     (state) => state.searchBarOnOff
   );
   const dispatch = useDispatch();
-  // const [operationActivate, setOperationActivate] = useState<boolean>(false);
-
-  // const subMenuClickToggleFunc = useCallback(
-  //   (area: string) => {
-  //     if (area === "inSide") setOperationActivate((pre) => !pre);
-  //     else if (operationActivate)
-  //       dispatch({
-  //         type: Actions.SET_SEARCH_ENTER_ACTIVATED,
-  //         payload: { searchBarOnOff: true },
-  //       });
-  //   },
-  //   [searchBarOnOff]
-  // );
-
   return searchBarOnOff ? (
     <NavbarWrap>
       <OnOutsiceClick

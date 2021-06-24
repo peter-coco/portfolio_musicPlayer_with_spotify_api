@@ -29,6 +29,7 @@ const MainMusicList = styled.div`
   width: 300px;
   height: 80px;
   display: flex;
+  position: relative;
   align-items: center;
   margin-right: 30px;
   @media (max-width: 750px) {
@@ -86,22 +87,54 @@ const MainMusicListArtistNAlbum = styled.div`
   }
 `;
 
-const MainMusicSubFunc = styled.div`
-  width: 100%;
+const MainMusicSubFunctions = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #1b1b1b;
+  width: 300px;
   height: 100%;
+  opacity: 0;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const MainMusicSubFunc = styled.i`
+  font-size: 20px;
+  color: #fff;
+  line-height: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: #975f31;
+  }
+  @media (max-width: 750px) {
+    font-size: 15px;
+    margin-left: 20px;
+    /* line-height: 30px; */
+  }
+
+  @media (max-width: 350px) {
+    font-size: 10px;
+  }
 `;
 
 function MainMusicLists({
+  track,
   albumCover,
   songTitle,
   artist,
   albumTitle,
 }: {
+  track: Music;
   albumCover: any;
   songTitle: string;
   artist: string;
   albumTitle: string;
 }) {
+  const dispatch = useDispatch();
   return (
     <MainMusicList>
       <MainMusicListImg src={albumCover} />
@@ -111,37 +144,56 @@ function MainMusicLists({
           {artist} / {albumTitle}
         </MainMusicListArtistNAlbum>
       </MainMusicListSubscription>
-      <MainMusicSubFunc />
+      <MainMusicSubFunctions>
+        <MainMusicSubFunc
+          className="fas fa-play"
+          onClick={() =>
+            dispatch({
+              type: Actions.CHOICE_PLAY_MUSIC_NOW,
+              payload: { trackNow: track },
+            })
+          }
+        />
+        <MainMusicSubFunc className="fas fa-thumbs-up" />
+        <MainMusicSubFunc className="fas fa-ellipsis-v list-ellipsis" />
+      </MainMusicSubFunctions>
     </MainMusicList>
   );
 }
 
 export function MainRecommandedList() {
   const dispatch = useDispatch();
-  const entraceCode = useSelector<GlobalState, string>(
-    (state) => state.entraceCode
-  );
-  const selectedMusicGenre = useSelector<GlobalState, string>(
-    (state) => state.selectedMusicGenre
-  );
-  const searchResult = useSelector<GlobalState, string>(
-    (state) => state.searchResult
-  );
-  const searchBarEnterOnOff = useSelector<GlobalState, boolean>(
-    (state) => state.searchBarEnterOnOff
-  );
-  const trackList = useSelector<GlobalState, Music[]>(
-    (state) => state.trackList
-  );
+  const [
+    entraceCode,
+    selectedMusicGenre,
+    searchResult,
+    searchBarEnterOnOff,
+    trackList,
+    mainModeIdx,
+  ] = useSelector<
+    GlobalState,
+    [string, string, string, boolean, Music[], number]
+  >((state) => [
+    state.entraceCode,
+    state.selectedMusicGenre,
+    state.searchResult,
+    state.searchBarEnterOnOff,
+    state.trackList,
+    state.mainContentsModeIdx,
+  ]);
+
   // console.log(`entrace code : ${entraceCode}`);
   // console.log(`code : ${code}`);
   const accessToken = useAuth(entraceCode);
-  // const [search, setSearch] = useState<string>("a");
-  // const [searchResults, setSearchResults] = useState<Music[]>([]);
 
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    dispatch({
+      type: Actions.SET_ACCEES_TOKEN_NOW,
+      payload: { accessTokenNow: accessToken },
+    });
+    // setPassedCode(accessToken);
   }, [accessToken]);
 
   useEffect(() => {
@@ -156,6 +208,7 @@ export function MainRecommandedList() {
           album: track.album.name,
           albumImg: track.album.images[0].url,
           popularity: track.popularity,
+          url: track.uri,
         };
       }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
       dispatch({
@@ -167,7 +220,48 @@ export function MainRecommandedList() {
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    // if (!search) return setSearchResults([]);
+    if (!accessToken) return;
+
+    // spotifyApi.getUserPlaylists("My playlist").then(
+    //   function (data) {
+    //     console.log("Retrieved playlists", data.body);
+    //   },
+    //   function (err) {
+    //     console.log("Something went wrong!", err);
+    //   }
+    // );
+
+    // Create a private playlist
+    // spotifyApi
+    //   .createPlaylist("My playlist", {
+    //     description: "My description",
+    //     // public: true,
+    //   })
+    //   .then(
+    //     function (data) {
+    //       console.log("Created playlist!");
+    //     },
+    //     function (err) {
+    //       console.log("Something went wrong!", err);
+    //     }
+    //   );
+
+    // spotifyApi
+    //   .addTracksToPlaylist("5ieJqeLJjjI8iJWaxeBLuK", [
+    //     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
+    //     "spotify:track:1301WleyT98MSxVHPZCA6M",
+    //   ])
+    //   .then(
+    //     function (data) {
+    //       console.log("Added tracks to playlist!");
+    //     },
+    //     function (err) {
+    //       console.log("Something went wrong!", err);
+    //     }
+    //   );
+  }, [accessToken]);
+
+  useEffect(() => {
     if (!accessToken) return;
     // spotifyApi.getAvailableGenreSeeds().then(
     //   function (data) {
@@ -193,6 +287,7 @@ export function MainRecommandedList() {
             album: "track.album.name",
             albumImg: "track.album.images[0].url,",
             popularity: 30,
+            url: track.uri,
           };
         }); // ?를 추가하는거는?? undefined가 있을수도 있다는 의미??
         // setSearchResults(list ? list : []);
@@ -202,10 +297,6 @@ export function MainRecommandedList() {
         });
       });
   }, [selectedMusicGenre, accessToken]);
-
-  const mainModeIdx = useSelector<GlobalState>(
-    (state) => state.mainContentsModeIdx
-  );
 
   return (
     <MainMusicListWrap style={{ display: mainModeIdx === 0 ? "flex" : "none" }}>
@@ -217,6 +308,7 @@ export function MainRecommandedList() {
         .map((e) => (
           <MainMusicLists
             key={e.title + e.artist + e.album}
+            track={e}
             albumCover={e.albumImg}
             songTitle={e.title}
             artist={e.artist}

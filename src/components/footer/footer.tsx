@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 import { FooterMusicInfor } from "./footer-musicInfor";
 import { FooterOperations } from "./footer-operations";
-import musicImg from "../../image/navbar-logo.png";
+import SpotifyPlayer from "react-spotify-web-playback";
+import { useSelector } from "react-redux";
+import { GlobalState, Music } from "../../redux/reducer";
+import { useEffect, useState } from "react";
 
 const FooterWrap = styled.div`
   width: 100%;
@@ -44,14 +47,32 @@ const FooterLogoImgWrap = styled.div`
 `;
 
 export function Footer() {
+  const trackNow = useSelector<GlobalState, Music>((state) => state.trackNow);
+  const [accessTokenNow] = useSelector<GlobalState, [string]>((state) => [
+    state.accessTokenNow,
+  ]);
+  const [play, setPlay] = useState(false);
+  useEffect(() => setPlay(true), [trackNow.url]);
+
+  if (!accessTokenNow) return null;
   return (
-    <FooterWrap>
-      {/* <div style={{ width: 250 }} /> */}
-      {/* <FooterLogoImgWrap>
-        <FooterLogoImg src={musicImg} />
-      </FooterLogoImgWrap> */}
-      <FooterMusicInfor />
-      <FooterOperations />
-    </FooterWrap>
+    // <FooterWrap>
+    //   <div style={{ width: 250 }} />
+    //   <FooterLogoImgWrap>
+    //     <FooterLogoImg src={musicImg} />
+    //   </FooterLogoImgWrap>
+    //   <FooterMusicInfor />
+    //   <FooterOperations />
+    // </FooterWrap>
+
+    <SpotifyPlayer
+      token={accessTokenNow}
+      showSaveIcon
+      callback={(state) => {
+        if (!state.isPlaying) setPlay(false);
+      }}
+      play={play}
+      uris={trackNow.url ? [trackNow.url] : []}
+    />
   );
 }

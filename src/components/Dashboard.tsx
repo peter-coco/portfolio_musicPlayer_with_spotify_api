@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "../redux/actions";
-// import { GlobalState } from "../redux/reducer";
 
 import styled from "styled-components";
 

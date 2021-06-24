@@ -76,27 +76,15 @@ function Maintitle({ title, barColor }: { title: string; barColor: string }) {
 }
 
 export function Main() {
-  // const mode = useSelector;
-  const [mainModeIdx, nameOfTitle, colorOfTitleBar] = useSelector<
+  const [nameOfTitle, colorOfTitleBar] = useSelector<
     GlobalState,
-    [number, string, string]
-  >((state) => [
-    state.mainContentsModeIdx,
-    state.nameOfTitle,
-    state.colorOfTitleBar,
-  ]);
-
-  // const titleList = ["Recommanded", "Genre", "Library"];
-  // const titleUnderBarColor = ["#72B1C5", "#7972C5", "#D96BC1"];
+    [string, string]
+  >((state) => [state.nameOfTitle, state.colorOfTitleBar]);
 
   return (
     <MainWrap>
       <MainContentsWrap>
-        <Maintitle
-          // title={titleList[mainModeIdx]}
-          title={nameOfTitle}
-          barColor={colorOfTitleBar}
-        />
+        <Maintitle title={nameOfTitle} barColor={colorOfTitleBar} />
         <MainGenre />
         <MainRecommandedList />
       </MainContentsWrap>
