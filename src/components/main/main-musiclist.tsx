@@ -190,6 +190,8 @@ export const MainRecommandedList = () => {
   const accessToken = useAuth(entraceCode);
   // spotifyApi.setAccessToken(accessToken);
 
+  const [libraryId, setLibraryId] = useState("");
+
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
@@ -224,62 +226,73 @@ export const MainRecommandedList = () => {
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    if (!accessToken) return;
-    console.log("IN?", accessToken);
-
-    // spotifyApi.getUserPlaylists("My playlist").then(
-    //   function (data) {
-    //     console.log("Retrieved playlists", data.body);
-    //   },
-    //   function (err) {
-    //     console.log("Something went wrong!", err);
-    //   }
-    // );
-
-    // Create a private playlist
-    // spotifyApi
-    //   .createPlaylist("fjdkslafjsyydklfr", {
-    //     description: "My description",
-    //     // public: true,
-    //   })
-    //   .then(
-    //     function (data) {
-    //       console.log("Created playlist!");
-    //     },
-    //     function (err) {
-    //       console.log("Something went wrong!", err);
-    //     }
-    //   );
-    async function t() {
-      const user_id = "cng5x2n87deht9u25pqbiunn2";
-
-      const { data } = await axios.post(
-        `https://api.spotify.com/v1/users/${user_id}/playlists`,
-        { name: "test" },
-        {
-          headers: {
-            authorization:
-              "Bearer " +
-              "BQAsxyDNBnnbUD-oRn01z5XAL9Vj6NcaIgb1MqUrCuweHoBKxXmTAGW-2QiwGktWNqVt2wgAKDiMZLIJwHsF73Bo_YV1YU8HZEtGQV0F4Gv5PSyzLMqdHqIe6MpD4XxCq63ZQw-pTyNtvMq3J3Qqfo9csdyJJ8318NQY9TA4JhNnWIpj3_49Xf1yW5e6MfgpycDEd4RlZ0yocZV-wYVKZV5fWChwfW7H",
-          },
+    if (!libraryId) return;
+    spotifyApi
+      .addTracksToPlaylist(libraryId, [
+        "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
+        "spotify:track:1301WleyT98MSxVHPZCA6M",
+      ])
+      .then(
+        function (data) {
+          console.log("Added tracks to playlist!");
+          console.log(data);
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
         }
       );
-      console.log("hello", data);
-    }
-    t();
-    // spotifyApi
-    //   .addTracksToPlaylist("5ieJqeLJjjI8iJWaxeBLuK", [
-    //     "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
-    //     "spotify:track:1301WleyT98MSxVHPZCA6M",
-    //   ])
-    //   .then(
-    //     function (data) {
-    //       console.log("Added tracks to playlist!");
-    //     },
-    //     function (err) {
-    //       console.log("Something went wrong!", err);
+  }, [libraryId]);
+
+  useEffect(() => {
+    if (!libraryId) return;
+    spotifyApi.getPlaylist(libraryId).then(
+      function (data) {
+        console.log("Some information about this playlist", data.body);
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
+  });
+
+  useEffect(() => {
+    if (!accessToken) return;
+    // console.log("IN?", accessToken);
+
+    // Create a private playlist
+    spotifyApi
+      .createPlaylist("My playlist", {
+        description: "My description",
+        // public: true,
+      })
+      .then(
+        function (data) {
+          console.log("Created playlist!");
+          console.log(data);
+          setLibraryId(data.body.id);
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+
+    // async function t() {
+    //   const user_id = "cng5x2n87deht9u25pqbiunn2";
+
+    //   const { data } = await axios.post(
+    //     `https://api.spotify.com/v1/users/${user_id}/playlists`,
+    //     { name: "test" },
+    //     {
+    //       headers: {
+    //         authorization:
+    //           "Bearer " +
+    //           "BQAsxyDNBnnbUD-oRn01z5XAL9Vj6NcaIgb1MqUrCuweHoBKxXmTAGW-2QiwGktWNqVt2wgAKDiMZLIJwHsF73Bo_YV1YU8HZEtGQV0F4Gv5PSyzLMqdHqIe6MpD4XxCq63ZQw-pTyNtvMq3J3Qqfo9csdyJJ8318NQY9TA4JhNnWIpj3_49Xf1yW5e6MfgpycDEd4RlZ0yocZV-wYVKZV5fWChwfW7H",
+    //       },
     //     }
     //   );
+    //   console.log("hello", data);
+    // }
+    // t();
   }, [accessToken]);
 
   useEffect(() => {
