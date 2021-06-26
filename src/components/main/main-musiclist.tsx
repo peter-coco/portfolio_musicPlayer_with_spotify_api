@@ -5,13 +5,13 @@ import { GlobalState, Music } from "../../redux/reducer";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
 import Actions from "../../redux/actions";
-import axios from "axios";
+// import axios from "axios";
 
-export const spotifyApi = new SpotifyWebApi({
-  clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
-  clientSecret: "eabebe089db44942bc912940c398c29a",
-  redirectUri: "http://localhost:3000",
-});
+// export const spotifyApi = new SpotifyWebApi({
+//   clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
+//   clientSecret: "eabebe089db44942bc912940c398c29a",
+//   redirectUri: "http://localhost:3000",
+// });
 
 const MainMusicListWrap = styled.div`
   width: 100%;
@@ -124,27 +124,20 @@ const MainMusicSubFunc = styled.i`
   }
 `;
 
-const MainMusicLists = ({
-  track,
-  albumCover,
-  songTitle,
-  artist,
-  albumTitle,
-}: {
-  track: Music;
-  albumCover: any;
-  songTitle: string;
-  artist: string;
-  albumTitle: string;
-}) => {
+const MainMusicLists = ({ track }: { track: Music }) => {
   const dispatch = useDispatch();
+  const [spotifyApi, myListId] = useSelector<
+    GlobalState,
+    [SpotifyWebApi, string]
+  >((state) => [state.spotifyApi, state.myListId]);
+
   return (
     <MainMusicList>
-      <MainMusicListImg src={albumCover} />
+      <MainMusicListImg src={track.albumImg} />
       <MainMusicListSubscription>
-        <MainMusicListTitle>{songTitle}</MainMusicListTitle>
+        <MainMusicListTitle>{track.title}</MainMusicListTitle>
         <MainMusicListArtistNAlbum>
-          {artist} / {albumTitle}
+          {track.artist} / {track.album}
         </MainMusicListArtistNAlbum>
       </MainMusicListSubscription>
       <MainMusicSubFunctions>
@@ -158,7 +151,30 @@ const MainMusicLists = ({
           }
         />
         <MainMusicSubFunc className="fas fa-thumbs-up" />
-        <MainMusicSubFunc className="fas fa-ellipsis-v list-ellipsis" />
+        <MainMusicSubFunc
+          className="fas fa-plus"
+          onClick={() => {
+            if (!myListId) return;
+            spotifyApi
+              .addTracksToPlaylist(myListId, [track.url])
+              .then((res) => {
+                dispatch({
+                  type: Actions.SET_ADD_MUSIC_TO_MYLIST,
+                });
+              });
+          }}
+        />
+        <MainMusicSubFunc
+          className="fas fa-minus"
+          onClick={() => {
+            if (!myListId) return;
+            spotifyApi
+              .removeTracksFromPlaylist(myListId, [{ uri: track.url }])
+              .then((res) => {
+                dispatch({ type: Actions.SET_SUB_MUSIC_FROM_MYLIST });
+              });
+          }}
+        />
       </MainMusicSubFunctions>
     </MainMusicList>
   );
@@ -173,9 +189,24 @@ export const MainRecommandedList = () => {
     searchBarEnterOnOff,
     trackList,
     mainModeIdx,
+    spotifyApi,
+    myListId,
+    addMusicToMylist,
+    subMusicFromMylist,
   ] = useSelector<
     GlobalState,
-    [string, string, string, boolean, Music[], number]
+    [
+      string,
+      string,
+      string,
+      boolean,
+      Music[],
+      number,
+      SpotifyWebApi,
+      string,
+      boolean,
+      boolean
+    ]
   >((state) => [
     state.entraceCode,
     state.selectedMusicGenre,
@@ -183,14 +214,13 @@ export const MainRecommandedList = () => {
     state.searchBarEnterOnOff,
     state.trackList,
     state.mainContentsModeIdx,
+    state.spotifyApi,
+    state.myListId,
+    state.addMusicToMylist,
+    state.subMusicFromMylist,
   ]);
 
-  // console.log(`entrace code : ${entraceCode}`);
-  // console.log(`code : ${code}`);
   const accessToken = useAuth(entraceCode);
-  // spotifyApi.setAccessToken(accessToken);
-
-  const [libraryId, setLibraryId] = useState("");
 
   useEffect(() => {
     if (!accessToken) return;
@@ -199,13 +229,10 @@ export const MainRecommandedList = () => {
       type: Actions.SET_ACCEES_TOKEN_NOW,
       payload: { accessTokenNow: accessToken },
     });
-    // setPassedCode(accessToken);
   }, [accessToken]);
 
   useEffect(() => {
     if (!searchResult) return;
-    // console.log(trackList);
-    console.log(searchResult);
     spotifyApi.searchTracks(searchResult).then((res) => {
       const list = res.body.tracks?.items.map((track) => {
         return {
@@ -221,91 +248,66 @@ export const MainRecommandedList = () => {
         type: Actions.SET_TRACK_LIST,
         payload: { trackList: list ? list : [] },
       });
-      // console.log(trackList, list);
     });
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    if (!libraryId) return;
-    spotifyApi
-      .addTracksToPlaylist(libraryId, [
-        "spotify:track:4iV5W9uYEdYUVa79Axb7Rh",
-        "spotify:track:1301WleyT98MSxVHPZCA6M",
-      ])
-      .then(
-        function (data) {
-          console.log("Added tracks to playlist!");
-          console.log(data);
-        },
-        function (err) {
-          console.log("Something went wrong!", err);
-        }
-      );
-  }, [libraryId]);
+    // console.log(mainModeIdx);
 
-  useEffect(() => {
-    if (!libraryId) return;
-    spotifyApi.getPlaylist(libraryId).then(
-      function (data) {
-        console.log("Some information about this playlist", data.body);
-      },
-      function (err) {
-        console.log("Something went wrong!", err);
-      }
-    );
-  });
+    if (!myListId) return;
+    if (mainModeIdx !== 2) return;
+    // console.log(myListId);
+    spotifyApi.getPlaylist(myListId).then((res) => {
+      // console.log(res.body.tracks.items);
+      const list = res.body.tracks.items.map((track) => {
+        return {
+          title: track.track.name,
+          artist: track.track.artists[0].name,
+          album: track.track.album.name,
+          albumImg: track.track.album.images[0].url,
+          popularity: track.track.popularity,
+          url: track.track.uri,
+        };
+      });
+      dispatch({
+        type: Actions.SET_TRACK_LIST,
+        payload: { trackList: list ? list : [] },
+      });
+    });
+  }, [myListId, mainModeIdx, addMusicToMylist, subMusicFromMylist]);
 
   useEffect(() => {
     if (!accessToken) return;
-    // console.log("IN?", accessToken);
-
     // Create a private playlist
     spotifyApi
       .createPlaylist("My playlist", {
-        description: "My description",
-        // public: true,
+        description: "My favorite music list",
       })
-      .then(
-        function (data) {
-          console.log("Created playlist!");
-          console.log(data);
-          setLibraryId(data.body.id);
-        },
-        function (err) {
-          console.log("Something went wrong!", err);
-        }
-      );
+      .then((res) => {
+        // console.log(res.body.id);
+        dispatch({
+          type: Actions.SET_MYLIST_ID,
+          payload: { myListId: res.body.id },
+        });
+      });
 
-    // async function t() {
-    //   const user_id = "cng5x2n87deht9u25pqbiunn2";
-
-    //   const { data } = await axios.post(
-    //     `https://api.spotify.com/v1/users/${user_id}/playlists`,
-    //     { name: "test" },
-    //     {
-    //       headers: {
-    //         authorization:
-    //           "Bearer " +
-    //           "BQAsxyDNBnnbUD-oRn01z5XAL9Vj6NcaIgb1MqUrCuweHoBKxXmTAGW-2QiwGktWNqVt2wgAKDiMZLIJwHsF73Bo_YV1YU8HZEtGQV0F4Gv5PSyzLMqdHqIe6MpD4XxCq63ZQw-pTyNtvMq3J3Qqfo9csdyJJ8318NQY9TA4JhNnWIpj3_49Xf1yW5e6MfgpycDEd4RlZ0yocZV-wYVKZV5fWChwfW7H",
-    //       },
-    //     }
-    //   );
-    //   console.log("hello", data);
-    // }
-    // t();
+    // Create a playing list what i listened once
+    spotifyApi
+      .createPlaylist("playing now list", {
+        description: "My playlist what i listened once",
+      })
+      .then((res) => {
+        dispatch({
+          type: Actions.SET_PLAYING_NOW_LIST_ID,
+          payload: res.body.id,
+        });
+      });
   }, [accessToken]);
 
   useEffect(() => {
+    // console.log(mainModeIdx);
     if (!accessToken) return;
-    // spotifyApi.getAvailableGenreSeeds().then(
-    //   function (data) {
-    //     let genreSeeds = data.body;
-    //     console.log(genreSeeds);
-    //   },
-    //   function (err) {
-    //     console.log("Something went wrong!", err);
-    //   }
-    // );
+    if (mainModeIdx !== 0) return;
 
     // 검색을 하고나서 다시 여기를 했을 때 잘 안먹히네...??
     spotifyApi
@@ -313,7 +315,7 @@ export const MainRecommandedList = () => {
         seed_genres: [`${selectedMusicGenre}`],
       })
       .then((res) => {
-        console.log(res.body.tracks[0]);
+        // console.log(res.body.tracks[0]);
         const list = (res.body.tracks as SpotifyApi.TrackObjectFull[]).map(
           (track) => {
             return {
@@ -321,7 +323,7 @@ export const MainRecommandedList = () => {
               artist: track.artists[0].name,
               album: track.album.name,
               albumImg: track.album.images[0].url,
-              popularity: 30,
+              popularity: track.popularity,
               url: track.uri,
             };
           }
@@ -332,23 +334,23 @@ export const MainRecommandedList = () => {
           payload: { trackList: list ? list : [] },
         });
       });
-  }, [selectedMusicGenre, accessToken]);
+  }, [selectedMusicGenre, accessToken, mainModeIdx]);
 
   return (
-    <MainMusicListWrap style={{ display: mainModeIdx === 0 ? "flex" : "none" }}>
+    <MainMusicListWrap
+      style={{
+        display:
+          mainModeIdx === 0 ? "flex" : mainModeIdx === 2 ? "flex" : "none",
+      }}
+    >
       {trackList
-        // .filter()
         .sort((a, b) => {
           return b.popularity - a.popularity;
         })
-        .map((e) => (
+        .map((track) => (
           <MainMusicLists
-            key={e.title + e.artist + e.album}
-            track={e}
-            albumCover={e.albumImg}
-            songTitle={e.title}
-            artist={e.artist}
-            albumTitle={e.album}
+            key={track.title + track.artist + track.album}
+            track={track}
           />
         ))}
     </MainMusicListWrap>

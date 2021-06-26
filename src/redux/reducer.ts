@@ -1,4 +1,5 @@
 import Actions from "./actions";
+import SpotifyWebApi from "spotify-web-api-node";
 
 export interface Music {
   title: string;
@@ -22,6 +23,11 @@ export interface GlobalState {
   searchBarEnterOnOff: boolean;
   trackList: Music[];
   trackNow: Music;
+  spotifyApi: SpotifyWebApi;
+  myListId: string;
+  playingListId: string;
+  addMusicToMylist: boolean;
+  subMusicFromMylist: boolean;
 }
 
 const code = new URLSearchParams(window.location.search).get("code") ?? "";
@@ -46,6 +52,15 @@ const initialState: GlobalState = {
     popularity: 0,
     url: "",
   },
+  spotifyApi: new SpotifyWebApi({
+    clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
+    clientSecret: "eabebe089db44942bc912940c398c29a",
+    redirectUri: "http://localhost:3000",
+  }),
+  myListId: "",
+  playingListId: "",
+  addMusicToMylist: false,
+  subMusicFromMylist: false,
 };
 
 /**
@@ -84,14 +99,14 @@ function reducer(
     case Actions.CHANGE_MAIN_CONTENTS_MODE_TO_MYLIST:
       return {
         ...state,
-        mainContentsModeIdx: 0,
+        mainContentsModeIdx: 2,
         nameOfTitle: "MyList",
         colorOfTitleBar: "#D96BC1",
       };
     case Actions.CHANGE_MAIN_CONTENTS_MODE_TO_SEARCH:
       return {
         ...state,
-        mainContentsModeIdx: 0,
+        mainContentsModeIdx: state.mainContentsModeIdx,
         searchBarOnOff: action.payload.searchBarOnOff,
       };
     case Actions.SET_API_ENTRACE_CODE:
@@ -118,6 +133,26 @@ function reducer(
       return {
         ...state,
         accessTokenNow: action.payload.accessTokenNow,
+      };
+    case Actions.SET_MYLIST_ID:
+      return {
+        ...state,
+        myListId: action.payload.myListId,
+      };
+    case Actions.SET_PLAYING_NOW_LIST_ID:
+      return {
+        ...state,
+        playingListId: action.payload.playingListId,
+      };
+    case Actions.SET_ADD_MUSIC_TO_MYLIST:
+      return {
+        ...state,
+        addMusicToMylist: !state.addMusicToMylist,
+      };
+    case Actions.SET_SUB_MUSIC_FROM_MYLIST:
+      return {
+        ...state,
+        subMusicFromMylist: !state.subMusicFromMylist,
       };
     case Actions.CHOICE_MUSIC_GENRE:
       return {

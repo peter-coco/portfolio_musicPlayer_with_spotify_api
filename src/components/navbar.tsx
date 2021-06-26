@@ -137,7 +137,6 @@ export const Navbar = () => {
     <NavbarWrap>
       <OnOutsiceClick
         onOutsideClick={() => {
-          console.log("hi");
           dispatch({
             type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_SEARCH,
             payload: { searchBarOnOff: false },
