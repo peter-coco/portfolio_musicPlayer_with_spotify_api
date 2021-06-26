@@ -1,6 +1,5 @@
 import { MainGenre } from "./main-genre";
 import { MainRecommandedList } from "./main-musiclist";
-import { MainPlayingList } from "./main-playingList";
 
 import styled from "styled-components";
 import { GlobalState } from "../../redux/reducer";
@@ -94,7 +93,6 @@ export const Main = () => {
         <MainGenre />
         <MainRecommandedList />
       </MainContentsWrap>
-      {/* <MainPlayingList /> */}
     </MainWrap>
   );
 };

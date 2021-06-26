@@ -5,31 +5,20 @@ import { GlobalState, Music } from "../../redux/reducer";
 import SpotifyWebApi from "spotify-web-api-node";
 import useAuth from "../useAuth";
 import Actions from "../../redux/actions";
-// import axios from "axios";
-
-// export const spotifyApi = new SpotifyWebApi({
-//   clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
-//   clientSecret: "eabebe089db44942bc912940c398c29a",
-//   redirectUri: "http://localhost:3000",
-// });
 
 const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
-  display: flex;
-  /* flex-wrap: wrap; */
-  /* gap: 0px; */
-
+  grid-template-columns: 1fr 1fr;
   overflow: scroll;
 
   @media (max-width: 750px) {
-    flex-direction: column;
-    /* align-items: center; */
+    grid-template-columns: 1fr;
   }
 `;
 
 const MainMusicList = styled.div`
-  width: 300px;
+  width: 100%;
   height: 80px;
   display: flex;
   position: relative;
@@ -68,7 +57,7 @@ const MainMusicListSubscription = styled.div`
 `;
 const MainMusicListTitle = styled.div`
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   @media (max-width: 750px) {
     font-size: 15px;
   }
@@ -79,7 +68,7 @@ const MainMusicListTitle = styled.div`
 `;
 const MainMusicListArtistNAlbum = styled.div`
   color: #cacaca;
-  font-size: 20px;
+  font-size: 18px;
   /* width: 100%; */
   @media (max-width: 750px) {
     font-size: 15px;
@@ -94,9 +83,10 @@ const MainMusicSubFunctions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 30px;
   position: absolute;
   background-color: #1b1b1b;
-  width: 300px;
+  width: 80%;
   height: 100%;
   opacity: 0;
   &:hover {
@@ -126,10 +116,10 @@ const MainMusicSubFunc = styled.i`
 
 const MainMusicLists = ({ track }: { track: Music }) => {
   const dispatch = useDispatch();
-  const [spotifyApi, myListId] = useSelector<
+  const [spotifyApi, myListId, playingListId] = useSelector<
     GlobalState,
-    [SpotifyWebApi, string]
-  >((state) => [state.spotifyApi, state.myListId]);
+    [SpotifyWebApi, string, string]
+  >((state) => [state.spotifyApi, state.myListId, state.playingListId]);
 
   return (
     <MainMusicList>
@@ -143,12 +133,21 @@ const MainMusicLists = ({ track }: { track: Music }) => {
       <MainMusicSubFunctions>
         <MainMusicSubFunc
           className="fas fa-play"
-          onClick={() =>
+          onClick={() => {
             dispatch({
               type: Actions.CHOICE_PLAY_MUSIC_NOW,
               payload: { trackNow: track },
-            })
-          }
+            });
+
+            // if (!playingListId) return;
+            // spotifyApi
+            //   .addTracksToPlaylist(playingListId, [track.url])
+            //   .then((res) => {
+            //     dispatch({
+            //       type: Actions.SET_PLAYING_NOW_LIST_ID,
+            //     });
+            //   });
+          }}
         />
         <MainMusicSubFunc className="fas fa-thumbs-up" />
         <MainMusicSubFunc
@@ -252,13 +251,9 @@ export const MainRecommandedList = () => {
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    // console.log(mainModeIdx);
-
     if (!myListId) return;
     if (mainModeIdx !== 2) return;
-    // console.log(myListId);
     spotifyApi.getPlaylist(myListId).then((res) => {
-      // console.log(res.body.tracks.items);
       const list = res.body.tracks.items.map((track) => {
         return {
           title: track.track.name,
@@ -284,7 +279,6 @@ export const MainRecommandedList = () => {
         description: "My favorite music list",
       })
       .then((res) => {
-        // console.log(res.body.id);
         dispatch({
           type: Actions.SET_MYLIST_ID,
           payload: { myListId: res.body.id },
@@ -305,7 +299,6 @@ export const MainRecommandedList = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    // console.log(mainModeIdx);
     if (!accessToken) return;
     if (mainModeIdx !== 0) return;
 
@@ -315,7 +308,6 @@ export const MainRecommandedList = () => {
         seed_genres: [`${selectedMusicGenre}`],
       })
       .then((res) => {
-        // console.log(res.body.tracks[0]);
         const list = (res.body.tracks as SpotifyApi.TrackObjectFull[]).map(
           (track) => {
             return {
@@ -340,7 +332,7 @@ export const MainRecommandedList = () => {
     <MainMusicListWrap
       style={{
         display:
-          mainModeIdx === 0 ? "flex" : mainModeIdx === 2 ? "flex" : "none",
+          mainModeIdx === 0 ? "grid" : mainModeIdx === 2 ? "grid" : "none",
       }}
     >
       {trackList

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../../redux/reducer";
 import Actions from "../../redux/actions";
-import { useCallback } from "react";
 
 const MainGenreWrap = styled.div`
   width: 100%;
