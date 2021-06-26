@@ -119,6 +119,7 @@ function reducer(
     case Actions.SET_SEARCH_ENTER_ACTIVATED:
       return {
         ...state,
+        mainContentsModeIdx: 3,
         searchBarEnterOnOff: !state.searchBarEnterOnOff,
         nameOfTitle: `search result : ${state.searchResult}`,
         colorOfTitleBar: "#D96BC1",

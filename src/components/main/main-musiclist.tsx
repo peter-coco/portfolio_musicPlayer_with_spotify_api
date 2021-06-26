@@ -156,15 +156,6 @@ const MainMusicLists = ({ track }: { track: Music }) => {
               type: Actions.CHOICE_PLAY_MUSIC_NOW,
               payload: { trackNow: track },
             });
-
-            // if (!playingListId) return;
-            // spotifyApi
-            //   .addTracksToPlaylist(playingListId, [track.url])
-            //   .then((res) => {
-            //     dispatch({
-            //       type: Actions.SET_PLAYING_NOW_LIST_ID,
-            //     });
-            //   });
           }}
         />
         <MainMusicSubFunc className="fas fa-thumbs-up" />
@@ -250,6 +241,9 @@ export const MainRecommandedList = () => {
 
   useEffect(() => {
     if (!searchResult) return;
+    console.log("HIHI");
+    if (mainModeIdx !== 3) return;
+
     spotifyApi.searchTracks(searchResult).then((res) => {
       const list = res.body.tracks?.items.map((track) => {
         return {
@@ -269,6 +263,7 @@ export const MainRecommandedList = () => {
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
+    console.log(mainModeIdx);
     if (!myListId) return;
     if (mainModeIdx !== 2) return;
     spotifyApi.getPlaylist(myListId).then((res) => {
@@ -349,8 +344,7 @@ export const MainRecommandedList = () => {
   return (
     <MainMusicListWrap
       style={{
-        display:
-          mainModeIdx === 0 ? "grid" : mainModeIdx === 2 ? "grid" : "none",
+        display: mainModeIdx !== 1 ? "grid" : "none",
       }}
     >
       {trackList
