@@ -6,24 +6,39 @@ import Actions from "../../redux/actions";
 const MainGenreWrap = styled.div`
   width: 100%;
   height: 80%;
-  /* display: flex; */
-  flex-wrap: wrap;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow-y: scroll;
+
+  @media (max-width: 750px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const MainGenreList = styled.div`
-  width: 250px;
+  width: 200px;
   height: 50px;
   background-color: #1b1b1b;
   color: #fff;
-  margin-right: 50px;
+  /* margin-right: 50px; */
   text-align: center;
   line-height: 50px;
+  font-size: 16px;
+
   cursor: pointer;
   @media (max-width: 750px) {
     width: 130px;
     height: 40px;
     line-height: 40px;
-    margin-right: 30px;
+    font-size: 15px;
+
+    /* margin-right: 30px; */
+  }
+
+  @media (max-width: 350px) {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
   }
 `;
 
@@ -64,7 +79,7 @@ export const MainGenre = () => {
   );
 
   return (
-    <MainGenreWrap style={{ display: mainModeIdx === 1 ? "flex" : "none" }}>
+    <MainGenreWrap style={{ display: mainModeIdx === 1 ? "grid" : "none" }}>
       {genreLists.map((musicGenre) => (
         <MainGenreLists key={musicGenre} musicGenre={musicGenre} />
       ))}

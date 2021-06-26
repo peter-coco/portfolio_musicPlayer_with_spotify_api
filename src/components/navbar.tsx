@@ -11,6 +11,7 @@ const NavbarWrap = styled.div`
   min-height: 60px;
   /* position: absolute; */
   /* top: 0; */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,16 +41,22 @@ const NavbarMenu = styled.i`
 `;
 
 const NavbarSearchBarWrap = styled.div`
-  width: 560px;
+  display: flex;
+  justify-content: center;
+  width: 300px;
   height: 30px;
+
+  @media (max-width: 750px) {
+    width: 200px;
+  }
 `;
 
-const NavbarSearchBarEnter = styled.i`
-  width: 30px;
-  height: 30px;
-`;
+// const NavbarSearchBarEnter = styled.i`
+//   width: 30px;
+//   height: 30px;
+// `;
 const NavbarSearchBarInput = styled.input`
-  width: 400px;
+  width: 100%;
   height: 100%;
 `;
 
@@ -104,7 +111,6 @@ const NavbarSearchBar = () => {
   const dispatch = useDispatch();
   return (
     <NavbarSearchBarWrap>
-      <NavbarSearchBarEnter />
       <NavbarSearchBarInput
         onChange={(e) => {
           dispatch({

@@ -41,8 +41,7 @@ const MainContentsTitle = styled.div`
 
 const MainContentsTitleText = styled.div`
   color: #fff;
-  font-size: 40px;
-  margin-bottom: 0px;
+  font-size: 30px;
   @media (max-width: 750px) {
     font-size: 25px;
   }
@@ -54,7 +53,7 @@ const MainContentsTitleText = styled.div`
 
 const MainContentsTitleUnderbar = styled.div`
   width: 100%;
-  height: 5px;
+  height: 4px;
 
   @media (max-width: 750px) {
     height: 3px;

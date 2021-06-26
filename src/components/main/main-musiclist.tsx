@@ -10,7 +10,8 @@ const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
   grid-template-columns: 1fr 1fr;
-  overflow: scroll;
+  overflow-y: scroll;
+  /* overflow-x: hidden; */
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
@@ -55,27 +56,44 @@ const MainMusicListSubscription = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 const MainMusicListTitle = styled.div`
   color: #fff;
   font-size: 18px;
+  /* width: 300px; */
+
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   @media (max-width: 750px) {
     font-size: 15px;
+    width: 220px;
   }
 
   @media (max-width: 350px) {
     font-size: 13px;
+    width: 150px;
   }
 `;
 const MainMusicListArtistNAlbum = styled.div`
   color: #cacaca;
   font-size: 18px;
+
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   /* width: 100%; */
   @media (max-width: 750px) {
     font-size: 15px;
+    width: 220px;
   }
 
   @media (max-width: 350px) {
     font-size: 13px;
+    width: 150px;
   }
 `;
 
