@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 
-import store from "./redux";
+import store from "./redux/index";
 import { GlobalState } from "./redux/reducer";
 
 const code = new URLSearchParams(window.location.search).get("code");
