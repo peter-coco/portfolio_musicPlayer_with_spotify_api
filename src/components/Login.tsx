@@ -12,6 +12,7 @@ export default function Login() {
   //   (state) => state.authUrl
   // );
   // console.log(process.env.CLIENT_ID);
+  console.log("2222");
   return (
     <Container
       className="d-flex justify-content-center align-items-center"

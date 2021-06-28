@@ -29,6 +29,7 @@ export default function Dashboard({ code }: { code: string }) {
       payload: { apiEntraceCode: code },
     });
   }, [code]);
+  console.log("Hi");
 
   // dispatch({
   //   type: Actions.SET_API_ENTRACE_CODE,

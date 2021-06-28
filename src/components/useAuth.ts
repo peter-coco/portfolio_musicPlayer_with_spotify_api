@@ -12,15 +12,17 @@ export default function useAuth(code: string) {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
+      // .post("http://localhost:3001/login", {
       .post("https://musicdata.link/login", {
         code,
       })
       .then((res) => {
-        // console.log(res.data)
+        console.log(res.data);
         setAcceessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
         // setExpiresIn(61);
+        // window.history.pushState({}, "", "/");
       })
       .catch(() => {
         dispatch({
@@ -35,6 +37,7 @@ export default function useAuth(code: string) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
       axios
+        // .post("http://localhost:3001/refresh", {
         .post("https://musicdata.link/refresh", {
           refreshToken,
         })
@@ -44,10 +47,10 @@ export default function useAuth(code: string) {
           setExpiresIn(res.data.expiresIn);
           //   setExpiresIn(61); // 1초마다 갱신
           // setRefreshToken(res.data.refreshToken);
-          // window.history.pushState({}, null, "/");
+          window.history.pushState({}, "", "/");
         })
         .catch(() => {
-          // window.location.href = "/";
+          window.location.href = "/";
           // js : window.location
         });
     }, (expiresIn - 60) * 1000);
@@ -57,9 +60,10 @@ export default function useAuth(code: string) {
 
   return accessToken;
 }
-function dispatch(arg0: {
-  type: Actions;
-  payload: { apiEntraceCode: string };
-}) {
-  throw new Error("Function not implemented.");
-}
+
+// function dispatch(arg0: {
+//   type: Actions;
+//   payload: { apiEntraceCode: string };
+// }) {
+//   throw new Error("Function not implemented.");
+// }
