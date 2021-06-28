@@ -8,6 +8,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const http = require("http");
+
+const option = http.createServer(app).listen(80, () => {
+  // console.log(`Server is running at port ${80}`);
+  console.log("server is running on musicPlayer2 with SpotifyWebApi");
+});
+
 app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   // console.log("HI");
