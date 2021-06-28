@@ -7,7 +7,7 @@ const AUTH_URL =
   "https://accounts.spotify.com/authorize?client_id=e4ef76d98ff348cfbe2fe41f11d87279&response_type=code&redirect_uri=https://coco-peter.github.io/portfolio_musicPlayer_with_spotify_api/&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state%20playlist-modify-public%20playlist-modify-private";
 
 export default function Login() {
-  console.log(AUTH_URL);
+  // console.log(AUTH_URL);
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
