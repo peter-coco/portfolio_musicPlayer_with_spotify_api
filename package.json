@@ -27,7 +27,7 @@
     "react-outclick": "^0.0.4",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^4.0.3",
     "react-spotify-web-playback": "^0.8.1",
     "redux": "^4.1.0",
     "spotify-web-api-node": "^5.0.2",
