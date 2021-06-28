@@ -1,5 +1,6 @@
 import Actions from "./actions";
 import SpotifyWebApi from "spotify-web-api-node";
+require("dotenv").config();
 
 export interface Music {
   title: string;
@@ -53,9 +54,9 @@ const initialState: GlobalState = {
     url: "",
   },
   spotifyApi: new SpotifyWebApi({
-    clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
-    clientSecret: "eabebe089db44942bc912940c398c29a",
-    redirectUri: "http://localhost:3000",
+    redirectUri: process.env.REDIRECT_URI,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
   }),
   myListId: "",
   playingListId: "",
