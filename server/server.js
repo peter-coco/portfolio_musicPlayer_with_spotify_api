@@ -14,6 +14,27 @@ const option = http.createServer(app).listen(8080, () => {
   console.log("server is running on musicPlayer2 with SpotifyWebApi");
 });
 
+app.get("/", (req, res) => {
+  res.json(data);
+});
+
+let data = {
+  res: [
+    {
+      title: "yellow",
+      artist: "coldplay",
+      album: "Parachutes",
+      albumCover: "https://musicdata.link/images/coldplay_Parachutes.png",
+      time: 135,
+      likes: 128,
+      views: 5,
+      library: "",
+      genre: "ROCK",
+      isLike: false,
+    },
+  ],
+};
+
 app.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
   // console.log("HI");
