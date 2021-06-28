@@ -22,7 +22,7 @@ export default function useAuth(code: string) {
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
         // setExpiresIn(61);
-        // window.history.pushState({}, "", "/");
+        window.history.pushState({}, "", "/");
       })
       .catch(() => {
         dispatch({
