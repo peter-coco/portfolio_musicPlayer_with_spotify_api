@@ -241,7 +241,7 @@ export const MainRecommandedList = () => {
 
   useEffect(() => {
     if (!searchResult) return;
-    console.log("HIHI");
+    // console.log("HIHI");
     if (mainModeIdx !== 3) return;
 
     spotifyApi.searchTracks(searchResult).then((res) => {
@@ -263,7 +263,7 @@ export const MainRecommandedList = () => {
   }, [searchBarEnterOnOff]);
 
   useEffect(() => {
-    console.log(mainModeIdx);
+    // console.log(mainModeIdx);
     if (!myListId) return;
     if (mainModeIdx !== 2) return;
     spotifyApi.getPlaylist(myListId).then((res) => {
@@ -353,7 +353,7 @@ export const MainRecommandedList = () => {
         })
         .map((track) => (
           <MainMusicLists
-            key={track.title + track.artist + track.album}
+            key={track.title + track.artist + track.album + track.url}
             track={track}
           />
         ))}

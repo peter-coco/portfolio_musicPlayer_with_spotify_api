@@ -1,6 +1,6 @@
 import Actions from "./actions";
 import SpotifyWebApi from "spotify-web-api-node";
-require("dotenv").config();
+// require("dotenv").config();
 
 export interface Music {
   title: string;
@@ -29,9 +29,11 @@ export interface GlobalState {
   playingListId: string;
   addMusicToMylist: boolean;
   subMusicFromMylist: boolean;
+  // authUrl?: string;
 }
 
 const code = new URLSearchParams(window.location.search).get("code") ?? "";
+// console.log(process.env);
 
 const initialState: GlobalState = {
   mainContentsModeIdx: 0,
@@ -54,14 +56,13 @@ const initialState: GlobalState = {
     url: "",
   },
   spotifyApi: new SpotifyWebApi({
-    redirectUri: process.env.REDIRECT_URI,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientId: "e4ef76d98ff348cfbe2fe41f11d87279",
   }),
   myListId: "",
   playingListId: "",
   addMusicToMylist: false,
   subMusicFromMylist: false,
+  // authUrl: process.env.AUTH_URL,
 };
 
 /**

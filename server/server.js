@@ -1,4 +1,3 @@
-// require('dotenv').config();
 require("dotenv").config();
 const express = require("express");
 const SpotifyWebApi = require("spotify-web-api-node");
@@ -10,7 +9,7 @@ app.use(bodyParser.json());
 
 const http = require("http");
 
-const option = http.createServer(app).listen(80, () => {
+const option = http.createServer(app).listen(8080, () => {
   // console.log(`Server is running at port ${80}`);
   console.log("server is running on musicPlayer2 with SpotifyWebApi");
 });
@@ -41,6 +40,8 @@ app.post("/refresh", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  // console.log(process.env.CLIENT_ID);
+
   const code = req.body.code;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
@@ -63,4 +64,4 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.listen(3001);
+// app.listen(3001);
