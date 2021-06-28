@@ -11,10 +11,10 @@ import Dashboard from "./components/Dashboard";
 import store from "./redux";
 import { GlobalState } from "./redux/reducer";
 
-// const code = new URLSearchParams(window.location.search).get("code");
+const code = new URLSearchParams(window.location.search).get("code");
 
 const Main = () => {
-  const code = useSelector<GlobalState, string>((state) => state.entraceCode);
+  // const code = useSelector<GlobalState, string>((state) => state.entraceCode);
   console.log(code);
   return code ? <Dashboard code={code} /> : <Login />;
 };
