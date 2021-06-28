@@ -17,7 +17,7 @@ export default function useAuth(code: string) {
         code,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setAcceessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
@@ -29,6 +29,7 @@ export default function useAuth(code: string) {
           type: Actions.SET_API_ENTRACE_CODE,
           payload: { apiEntraceCode: "" },
         });
+        window.location.href = "/";
       });
   }, [code]);
 

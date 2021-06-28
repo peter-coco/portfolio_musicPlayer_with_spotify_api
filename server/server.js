@@ -9,10 +9,10 @@ app.use(bodyParser.json());
 
 const http = require("http");
 
-const option = http.createServer(app).listen(80, () => {
-  // console.log(`Server is running at port ${80}`);
-  console.log("server is running on musicPlayer2 with SpotifyWebApi");
-});
+// const option = http.createServer(app).listen(80, () => {
+//   // console.log(`Server is running at port ${80}`);
+//   console.log("server is running on musicPlayer2 with SpotifyWebApi");
+// });
 
 app.get("/", (req, res) => {
   res.header({
@@ -89,4 +89,4 @@ app.post("/login", (req, res) => {
     });
 });
 
-// app.listen(3001);
+app.listen(3001);
