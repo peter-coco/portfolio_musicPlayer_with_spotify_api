@@ -76,6 +76,7 @@ app.post("/login", (req, res) => {
   spotifyApi
     .authorizationCodeGrant(code)
     .then((data) => {
+      console.log(data);
       res.json({
         accessToken: data.body.access_token,
         refreshToken: data.body.refresh_token,
@@ -83,7 +84,7 @@ app.post("/login", (req, res) => {
       });
     })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.sendStatus(400);
     });
 });
