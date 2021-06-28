@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.header({
     "Access-Control-Allow-Origin": "*",
   });
-  // res.json(data);
+  res.json(data);
 });
 
 let data = {
