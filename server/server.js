@@ -15,7 +15,10 @@ const option = http.createServer(app).listen(80, () => {
 });
 
 app.get("/", (req, res) => {
-  res.json(data);
+  res.header({
+    "Access-Control-Allow-Origin": "*",
+  });
+  // res.json(data);
 });
 
 let data = {

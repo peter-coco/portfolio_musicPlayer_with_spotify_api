@@ -12,7 +12,7 @@ export default function useAuth(code: string) {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
-      .post("http://localhost:3001/login", {
+      .post("https://musicdata.link/login", {
         code,
       })
       .then((res) => {
@@ -35,7 +35,7 @@ export default function useAuth(code: string) {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(() => {
       axios
-        .post("http://localhost:3001/refresh", {
+        .post("https://musicdata.link/refresh", {
           refreshToken,
         })
         .then((res) => {
