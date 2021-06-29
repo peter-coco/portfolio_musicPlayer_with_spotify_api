@@ -10,7 +10,8 @@ import { MainMusicLists } from "./main-tracklist";
 const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
-  grid-template-columns: 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-template-columns: repeat(auto-fill, minmax(50%, auto));
   overflow-y: scroll;
   /* overflow-x: hidden; */
 
