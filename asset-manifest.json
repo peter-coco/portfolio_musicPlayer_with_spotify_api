@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/portfolio_musicPlayer_with_spotify_api/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/main.670d1235.chunk.js",
-    "main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/main.670d1235.chunk.js.map",
+    "main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/main.6962920d.chunk.js",
+    "main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/main.6962920d.chunk.js.map",
     "runtime-main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.0f177285.js",
     "runtime-main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.0f177285.js.map",
     "static/css/2.61b4cb56.chunk.css": "/portfolio_musicPlayer_with_spotify_api/static/css/2.61b4cb56.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.61b4cb56.chunk.css",
     "static/js/2.41440c66.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.670d1235.chunk.js"
+    "static/js/main.6962920d.chunk.js"
   ]
 }
