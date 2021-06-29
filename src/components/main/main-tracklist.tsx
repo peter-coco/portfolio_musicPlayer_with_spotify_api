@@ -105,7 +105,8 @@ const MainMusicSubFunc = styled.i`
   cursor: pointer;
 
   &:hover {
-    color: #975f31;
+    scale: (1.2);
+    color: #f2c94c;
   }
   @media (max-width: 750px) {
     font-size: 15px;
@@ -144,7 +145,7 @@ export const MainMusicLists = ({ track }: { track: Music }) => {
             });
           }}
         />
-        <MainMusicSubFunc className="fas fa-thumbs-up" />
+        {/* <MainMusicSubFunc className="fas fa-thumbs-up" /> */}
         <MainMusicSubFunc
           className="fas fa-plus"
           onClick={() => {
