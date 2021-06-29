@@ -17,7 +17,7 @@ const MainMusicListWrap = styled.div`
   /* overflow-x: hidden; */
 
   @media (max-width: 750px) {
-    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, minmax(20%, auto));
   }
 `;
 
