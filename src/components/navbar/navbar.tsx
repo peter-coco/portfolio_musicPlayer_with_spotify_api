@@ -43,7 +43,7 @@ const NavbarMenu = styled.i`
 
   &:hover {
     /* color: red; */
-    transform: rotate(-30deg) scale(1.2);
+    transform: scale(1.2) rotate(-30deg);
   }
 `;
 
@@ -119,7 +119,7 @@ const NavbarSearchBar = () => {
           });
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || "Esc") {
+          if (e.key === "Enter") {
             dispatch({
               type: Actions.SET_SEARCH_ENTER_ACTIVATED,
             });
