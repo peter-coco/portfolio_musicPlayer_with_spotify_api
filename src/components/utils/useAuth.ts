@@ -22,11 +22,7 @@ export default function useAuth(code: string) {
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn); // 만료 되는 시간에 맞춰서 갱신
         // setExpiresIn(61);
-        window.history.pushState(
-          {},
-          "",
-          "portfolio_musicPlayer_with_spotify_api/"
-        );
+        window.history.pushState({}, "", "a");
       })
       .catch(() => {
         dispatch({
@@ -52,11 +48,7 @@ export default function useAuth(code: string) {
           setExpiresIn(res.data.expiresIn);
           //   setExpiresIn(61); // 1초마다 갱신
           // setRefreshToken(res.data.refreshToken);
-          window.history.pushState(
-            {},
-            "",
-            "portfolio_musicPlayer_with_spotify_api/"
-          );
+          window.history.pushState({}, "", "a");
         })
         .catch(() => {
           window.location.href = "/";
