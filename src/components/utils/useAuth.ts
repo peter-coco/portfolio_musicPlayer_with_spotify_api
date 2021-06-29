@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Actions from "../redux/actions";
+import Actions from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 export default function useAuth(code: string) {

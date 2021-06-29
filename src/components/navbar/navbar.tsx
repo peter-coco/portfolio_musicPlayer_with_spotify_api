@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Actions from "../redux/actions";
-import { GlobalState, Music } from "../redux/reducer";
+import Actions from "../../redux/actions";
+import { GlobalState, Music } from "../../redux/reducer";
 import OnOutsiceClick from "react-outclick";
 
 const NavbarWrap = styled.div`
@@ -38,6 +38,11 @@ const NavbarMenu = styled.i`
   @media (max-width: 350px) {
     font-size: 15px;
   }
+
+  &:hover {
+    /* color: red; */
+    transform: rotate(-30deg);
+  }
 `;
 
 const NavbarSearchBarWrap = styled.div`
@@ -51,19 +56,12 @@ const NavbarSearchBarWrap = styled.div`
   }
 `;
 
-// const NavbarSearchBarEnter = styled.i`
-//   width: 30px;
-//   height: 30px;
-// `;
 const NavbarSearchBarInput = styled.input`
   width: 100%;
   height: 100%;
 `;
 
 const NavbarMenus = () => {
-  // const mainModeIdx = useSelector<GlobalState>(
-  //   (state) => state.mainContentsModeIdx
-  // );
   const dispatch = useDispatch();
 
   return (
@@ -119,7 +117,7 @@ const NavbarSearchBar = () => {
           });
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === "Enter" || "Esc") {
             dispatch({
               type: Actions.SET_SEARCH_ENTER_ACTIVATED,
             });

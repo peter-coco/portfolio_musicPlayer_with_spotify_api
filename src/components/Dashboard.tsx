@@ -3,7 +3,7 @@ import Actions from "../redux/actions";
 
 import styled from "styled-components";
 
-import { Navbar } from "./navbar";
+import { Navbar } from "./navbar/navbar";
 import { Footer } from "./footer/footer";
 import { Main } from "./main/main";
 import { useEffect } from "react";
@@ -29,11 +29,6 @@ export default function Dashboard({ code }: { code: string }) {
       payload: { apiEntraceCode: code },
     });
   }, [code]);
-
-  // dispatch({
-  //   type: Actions.SET_API_ENTRACE_CODE,
-  //   payload: { apiEntraceCode: code },
-  // });
 
   return (
     <BackgroundWrap>
