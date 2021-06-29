@@ -43,8 +43,7 @@ const NavbarMenu = styled.i`
 
   &:hover {
     /* color: red; */
-    transform: rotate(-30deg);
-    scale: 1.5;
+    transform: rotate(-30deg), scale(1.2);
   }
 `;
 

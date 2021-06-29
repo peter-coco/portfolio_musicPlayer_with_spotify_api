@@ -106,7 +106,7 @@ const MainMusicSubFunc = styled.i`
   transition: all 300ms ease;
 
   &:hover {
-    scale: (1.2);
+    transform: scale(1.2);
     color: #f2c94c;
   }
   @media (max-width: 750px) {
