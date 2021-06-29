@@ -32,6 +32,8 @@ const NavbarMenu = styled.i`
   line-height: 30px;
   color: #fff;
   cursor: pointer;
+  transition: all 300ms ease;
+
   @media (max-width: 750px) {
     font-size: 20px;
   }
@@ -42,6 +44,7 @@ const NavbarMenu = styled.i`
   &:hover {
     /* color: red; */
     transform: rotate(-30deg);
+    scale: 1.5;
   }
 `;
 

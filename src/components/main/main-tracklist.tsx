@@ -103,6 +103,7 @@ const MainMusicSubFunc = styled.i`
   color: #fff;
   line-height: 30px;
   cursor: pointer;
+  transition: all 300ms ease;
 
   &:hover {
     scale: (1.2);
