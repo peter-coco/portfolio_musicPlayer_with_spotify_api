@@ -12,6 +12,7 @@ const MainMusicListWrap = styled.div`
   height: 80%;
   /* grid-template-columns: 1fr 1fr; */
   grid-template-columns: repeat(auto-fill, minmax(50%, auto));
+  grid-template-rows: repeat(auto-fill, minmax(20%, auto));
   overflow-y: scroll;
   /* overflow-x: hidden; */
 
