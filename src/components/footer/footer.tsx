@@ -21,7 +21,7 @@ export const Footer = () => {
   if (!accessTokenNow) return null;
   return (
     <FooterWrap>
-      <SpotifyPlayer
+      {/* <SpotifyPlayer
         // style={{ width: "100%", height: "10vh" }}
         token={accessTokenNow}
         showSaveIcon
@@ -30,7 +30,7 @@ export const Footer = () => {
         }}
         play={play}
         uris={trackNow.url ? [trackNow.url] : []}
-      />
+      /> */}
     </FooterWrap>
   );
 };

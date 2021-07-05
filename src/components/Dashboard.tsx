@@ -20,15 +20,15 @@ const BackgroundWrap = styled.div`
   );
 `;
 
-export default function Dashboard({ code }: { code: string }) {
+export default function Dashboard() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({
-      type: Actions.SET_API_ENTRACE_CODE,
-      payload: { apiEntraceCode: code },
-    });
-  }, [code]);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: Actions.SET_API_ENTRACE_CODE,
+  //     payload: { apiEntraceCode: code },
+  //   });
+  // }, [code]);
 
   return (
     <BackgroundWrap>

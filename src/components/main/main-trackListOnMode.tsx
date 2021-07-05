@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GlobalState, Music } from "../../redux/reducer";
 import SpotifyWebApi from "spotify-web-api-node";
+
 import useAuth from "../utils/useAuth";
 import Actions from "../../redux/actions";
 import { MainMusicLists } from "./main-tracklist";
@@ -63,6 +64,7 @@ export const MainTrackListOnMode = () => {
 
   const accessToken = useAuth(entraceCode);
 
+  // console.log(accessToken);
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
@@ -95,54 +97,54 @@ export const MainTrackListOnMode = () => {
     });
   }, [searchBarEnterOnOff]);
 
-  useEffect(() => {
-    // console.log(mainModeIdx);
-    if (!myListId) return;
-    if (mainModeIdx !== 2) return;
-    spotifyApi.getPlaylist(myListId).then((res) => {
-      const list = res.body.tracks.items.map((track) => {
-        return {
-          title: track.track.name,
-          artist: track.track.artists[0].name,
-          album: track.track.album.name,
-          albumImg: track.track.album.images[0].url,
-          popularity: track.track.popularity,
-          url: track.track.uri,
-        };
-      });
-      dispatch({
-        type: Actions.SET_TRACK_LIST,
-        payload: { trackList: list ? list : [] },
-      });
-    });
-  }, [myListId, mainModeIdx, addMusicToMylist, subMusicFromMylist]);
+  // useEffect(() => {
+  //   // console.log(mainModeIdx);
+  //   if (!myListId) return;
+  //   if (mainModeIdx !== 2) return;
+  //   spotifyApi.getPlaylist(myListId).then((res) => {
+  //     const list = res.body.tracks.items.map((track) => {
+  //       return {
+  //         title: track.track.name,
+  //         artist: track.track.artists[0].name,
+  //         album: track.track.album.name,
+  //         albumImg: track.track.album.images[0].url,
+  //         popularity: track.track.popularity,
+  //         url: track.track.uri,
+  //       };
+  //     });
+  //     dispatch({
+  //       type: Actions.SET_TRACK_LIST,
+  //       payload: { trackList: list ? list : [] },
+  //     });
+  //   });
+  // }, [myListId, mainModeIdx, addMusicToMylist, subMusicFromMylist]);
 
-  useEffect(() => {
-    if (!accessToken) return;
-    // Create a private playlist
-    spotifyApi
-      .createPlaylist("My playlist", {
-        description: "My favorite music list",
-      })
-      .then((res) => {
-        dispatch({
-          type: Actions.SET_MYLIST_ID,
-          payload: { myListId: res.body.id },
-        });
-      });
+  // useEffect(() => {
+  //   if (!accessToken) return;
+  //   // Create a private playlist
+  //   spotifyApi
+  //     .createPlaylist("My playlist", {
+  //       description: "My favorite music list",
+  //     })
+  //     .then((res) => {
+  //       dispatch({
+  //         type: Actions.SET_MYLIST_ID,
+  //         payload: { myListId: res.body.id },
+  //       });
+  //     });
 
-    // Create a playing list what i listened once
-    spotifyApi
-      .createPlaylist("playing now list", {
-        description: "My playlist what i listened once",
-      })
-      .then((res) => {
-        dispatch({
-          type: Actions.SET_PLAYING_NOW_LIST_ID,
-          payload: res.body.id,
-        });
-      });
-  }, [accessToken]);
+  //   // Create a playing list what i listened once
+  //   spotifyApi
+  //     .createPlaylist("playing now list", {
+  //       description: "My playlist what i listened once",
+  //     })
+  //     .then((res) => {
+  //       dispatch({
+  //         type: Actions.SET_PLAYING_NOW_LIST_ID,
+  //         payload: res.body.id,
+  //       });
+  //     });
+  // }, [accessToken]);
 
   useEffect(() => {
     if (!accessToken) return;

@@ -32,13 +32,13 @@ export interface GlobalState {
   // authUrl?: string;
 }
 
-const code = new URLSearchParams(window.location.search).get("code") ?? "";
+// const code = new URLSearchParams(window.location.search).get("code") ?? "";
 // console.log(process.env);
 
 const initialState: GlobalState = {
   mainContentsModeIdx: 0,
   musicList: [],
-  entraceCode: code,
+  entraceCode: "code",
   accessTokenNow: "",
   selectedMusicGenre: "pop",
   nameOfTitle: "Recommand",
