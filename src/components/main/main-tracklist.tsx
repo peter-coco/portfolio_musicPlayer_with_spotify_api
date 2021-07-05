@@ -140,6 +140,7 @@ export const MainMusicLists = ({ track }: { track: Music }) => {
         <MainMusicSubFunc
           className="fas fa-play"
           onClick={() => {
+            console.log(track.url);
             dispatch({
               type: Actions.CHOICE_PLAY_MUSIC_NOW,
               payload: { trackNow: track },

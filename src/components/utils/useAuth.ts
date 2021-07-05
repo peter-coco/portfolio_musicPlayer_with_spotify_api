@@ -13,7 +13,10 @@ export default function useAuth(code: string) {
   useEffect(() => {
     axios
       .post("http://localhost:3001/login", {
+<<<<<<< HEAD
         // .post("https://musicdata.link/login", {
+      // .post("https://musicdata.link/login", {
+>>>>>>> defaa50eed8ef35294cbc215bace960c15d32549
         code,
       })
       .then((res) => {
@@ -33,6 +36,7 @@ export default function useAuth(code: string) {
       });
   }, [code]);
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   // 이부분 이해가 잘 안감
   //   if (!refreshToken || !expiresIn) return;
@@ -55,6 +59,30 @@ export default function useAuth(code: string) {
   //         // js : window.location
   //       });
   //   }, (expiresIn - 60) * 1000);
+=======
+  useEffect(() => {
+    // 이부분 이해가 잘 안감
+    if (!refreshToken || !expiresIn) return;
+    const interval = setInterval(() => {
+      axios
+        .post("http://localhost:3001/refresh", {
+        // .post("https://musicdata.link/refresh", {
+          refreshToken,
+        })
+        .then((res) => {
+          // console.log(res.data)
+          setAcceessToken(res.data.accessToken);
+          setExpiresIn(res.data.expiresIn);
+          //   setExpiresIn(61); // 1초마다 갱신
+          // setRefreshToken(res.data.refreshToken);
+          window.history.pushState({}, "", "/");
+        })
+        .catch(() => {
+          window.location.href = "/";
+          // js : window.location
+        });
+    }, (expiresIn - 60) * 1000);
+>>>>>>> defaa50eed8ef35294cbc215bace960c15d32549
 
   //   return () => clearInterval(interval);
   // }, [refreshToken, expiresIn]);
