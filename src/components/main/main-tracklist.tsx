@@ -83,43 +83,6 @@ const MainMusicListArtistNAlbum = styled.div`
   }
 `;
 
-const MainMusicSubFunctions = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  position: absolute;
-  background-color: #1b1b1b;
-  width: 80%;
-  height: 100%;
-  opacity: 0;
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-
-const MainMusicSubFunc = styled.i`
-  font-size: 20px;
-  color: #fff;
-  line-height: 30px;
-  cursor: pointer;
-  transition: all 300ms ease;
-
-  &:hover {
-    transform: scale(1.2);
-    color: #f2c94c;
-  }
-  @media (max-width: 750px) {
-    font-size: 15px;
-    margin-left: 20px;
-    /* line-height: 30px; */
-  }
-
-  @media (max-width: 350px) {
-    font-size: 10px;
-  }
-`;
-
 export const MainMusicLists = ({ track }: { track: Music }) => {
   const dispatch = useDispatch();
   const [spotifyApi, myListId, playingListId] = useSelector<
@@ -136,43 +99,6 @@ export const MainMusicLists = ({ track }: { track: Music }) => {
           {track.artist} / {track.album}
         </MainMusicListArtistNAlbum>
       </MainMusicListSubscription>
-      <MainMusicSubFunctions>
-        <MainMusicSubFunc
-          className="fas fa-play"
-          onClick={() => {
-            console.log(track.url);
-            dispatch({
-              type: Actions.CHOICE_PLAY_MUSIC_NOW,
-              payload: { trackNow: track },
-            });
-          }}
-        />
-        {/* <MainMusicSubFunc className="fas fa-thumbs-up" /> */}
-        <MainMusicSubFunc
-          className="fas fa-plus"
-          onClick={() => {
-            if (!myListId) return;
-            spotifyApi
-              .addTracksToPlaylist(myListId, [track.url])
-              .then((res) => {
-                dispatch({
-                  type: Actions.SET_ADD_MUSIC_TO_MYLIST,
-                });
-              });
-          }}
-        />
-        <MainMusicSubFunc
-          className="fas fa-minus"
-          onClick={() => {
-            if (!myListId) return;
-            spotifyApi
-              .removeTracksFromPlaylist(myListId, [{ uri: track.url }])
-              .then((res) => {
-                dispatch({ type: Actions.SET_SUB_MUSIC_FROM_MYLIST });
-              });
-          }}
-        />
-      </MainMusicSubFunctions>
     </MainMusicList>
   );
 };

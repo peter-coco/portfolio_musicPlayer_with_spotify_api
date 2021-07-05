@@ -5,24 +5,14 @@ import React from "react";
 import { Provider, useSelector } from "react-redux";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 
 import store from "./redux/index";
-import { GlobalState } from "./redux/reducer";
-
-// const code = new URLSearchParams(window.location.search).get("code");
-
-const Main = () => {
-  // const code = useSelector<GlobalState, string>((state) => state.entraceCode);
-  // return code ? <Dashboard code={code} /> : <Login />;
-  return <Dashboard />;
-};
 
 function App() {
   return (
     <Provider store={store}>
-      <Main />
+      <Dashboard />;
     </Provider>
   );
 }

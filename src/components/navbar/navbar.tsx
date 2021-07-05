@@ -84,14 +84,14 @@ const NavbarMenus = () => {
           });
         }}
       />
-      <NavbarMenu
+      {/* <NavbarMenu
         className="fas fa-list-alt"
         onClick={() => {
           dispatch({
             type: Actions.CHANGE_MAIN_CONTENTS_MODE_TO_MYLIST,
           });
         }}
-      />
+      /> */}
       <NavbarMenu
         className="fas fa-search"
         onClick={() => {

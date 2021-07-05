@@ -11,14 +11,15 @@ import { MainMusicLists } from "./main-tracklist";
 const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
-  /* grid-template-columns: 1fr 1fr; */
+
   grid-template-columns: repeat(auto-fill, minmax(50%, auto));
-  grid-template-rows: repeat(auto-fill, minmax(20%, auto));
+  grid-template-rows: 1fr;
   overflow-y: scroll;
   /* overflow-x: hidden; */
 
   @media (max-width: 750px) {
-    grid-template-rows: repeat(auto-fill, minmax(20%, auto));
+    grid-template-columns: 1fr;
+    /* grid-template-rows: repeat(auto-fill, minmax(50%, auto)); */
   }
 `;
 
@@ -32,23 +33,9 @@ export const MainTrackListOnMode = () => {
     trackList,
     mainModeIdx,
     spotifyApi,
-    myListId,
-    addMusicToMylist,
-    subMusicFromMylist,
   ] = useSelector<
     GlobalState,
-    [
-      string,
-      string,
-      string,
-      boolean,
-      Music[],
-      number,
-      SpotifyWebApi,
-      string,
-      boolean,
-      boolean
-    ]
+    [string, string, string, boolean, Music[], number, SpotifyWebApi]
   >((state) => [
     state.entraceCode,
     state.selectedMusicGenre,
@@ -57,9 +44,6 @@ export const MainTrackListOnMode = () => {
     state.trackList,
     state.mainContentsModeIdx,
     state.spotifyApi,
-    state.myListId,
-    state.addMusicToMylist,
-    state.subMusicFromMylist,
   ]);
 
   const accessToken = useAuth(entraceCode);
@@ -97,55 +81,6 @@ export const MainTrackListOnMode = () => {
     });
   }, [searchBarEnterOnOff]);
 
-  // useEffect(() => {
-  //   // console.log(mainModeIdx);
-  //   if (!myListId) return;
-  //   if (mainModeIdx !== 2) return;
-  //   spotifyApi.getPlaylist(myListId).then((res) => {
-  //     const list = res.body.tracks.items.map((track) => {
-  //       return {
-  //         title: track.track.name,
-  //         artist: track.track.artists[0].name,
-  //         album: track.track.album.name,
-  //         albumImg: track.track.album.images[0].url,
-  //         popularity: track.track.popularity,
-  //         url: track.track.uri,
-  //       };
-  //     });
-  //     dispatch({
-  //       type: Actions.SET_TRACK_LIST,
-  //       payload: { trackList: list ? list : [] },
-  //     });
-  //   });
-  // }, [myListId, mainModeIdx, addMusicToMylist, subMusicFromMylist]);
-
-  // useEffect(() => {
-  //   if (!accessToken) return;
-  //   // Create a private playlist
-  //   spotifyApi
-  //     .createPlaylist("My playlist", {
-  //       description: "My favorite music list",
-  //     })
-  //     .then((res) => {
-  //       dispatch({
-  //         type: Actions.SET_MYLIST_ID,
-  //         payload: { myListId: res.body.id },
-  //       });
-  //     });
-
-  //   // Create a playing list what i listened once
-  //   spotifyApi
-  //     .createPlaylist("playing now list", {
-  //       description: "My playlist what i listened once",
-  //     })
-  //     .then((res) => {
-  //       dispatch({
-  //         type: Actions.SET_PLAYING_NOW_LIST_ID,
-  //         payload: res.body.id,
-  //       });
-  //     });
-  // }, [accessToken]);
-
   useEffect(() => {
     if (!accessToken) return;
     if (mainModeIdx !== 0) return;
@@ -158,6 +93,7 @@ export const MainTrackListOnMode = () => {
       .then((res) => {
         const list = (res.body.tracks as SpotifyApi.TrackObjectFull[]).map(
           (track) => {
+            // console.log(track.album.images[0].url);
             return {
               title: track.name,
               artist: track.artists[0].name,
