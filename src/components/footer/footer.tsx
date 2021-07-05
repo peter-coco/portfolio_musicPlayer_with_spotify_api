@@ -16,7 +16,10 @@ export const Footer = () => {
     state.accessTokenNow,
   ]);
   const [play, setPlay] = useState(false);
-  useEffect(() => setPlay(true), [trackNow.url]);
+  useEffect(() => {
+    setPlay(true);
+    console.log(trackNow.url);
+  }, [trackNow.url]);
 
   if (!accessTokenNow) return null;
   return (

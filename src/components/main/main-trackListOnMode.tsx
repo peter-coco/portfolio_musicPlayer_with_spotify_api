@@ -210,4 +210,5 @@ export const MainTrackListOnMode = () => {
 
 // let d:C =  c;
 
+// console.log(d.b);
 // console.log((d as D).b)  // 확신이 있을 때 !!
