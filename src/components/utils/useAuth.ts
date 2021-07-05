@@ -13,10 +13,8 @@ export default function useAuth(code: string) {
   useEffect(() => {
     axios
       .post("http://localhost:3001/login", {
-<<<<<<< HEAD
         // .post("https://musicdata.link/login", {
       // .post("https://musicdata.link/login", {
->>>>>>> defaa50eed8ef35294cbc215bace960c15d32549
         code,
       })
       .then((res) => {
