@@ -10,7 +10,8 @@ export default function useAuth(code: string) {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
-      .post("http://localhost:3001/login")
+      // .post("http://localhost:3001/login")
+      .post("https://musicdata.link/login")
       .then((res) => {
         // console.log(res.data);
         setAcceessToken(res.data.accessToken);
