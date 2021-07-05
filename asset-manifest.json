@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/portfolio_musicPlayer_with_spotify_api/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/main.27ee303c.chunk.js",
-    "main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/main.27ee303c.chunk.js.map",
-    "runtime-main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.0f177285.js",
-    "runtime-main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.0f177285.js.map",
+    "main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/main.3bc0d67b.chunk.js",
+    "main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/main.3bc0d67b.chunk.js.map",
+    "runtime-main.js": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.83f502ce.js",
+    "runtime-main.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/runtime-main.83f502ce.js.map",
     "static/css/2.61b4cb56.chunk.css": "/portfolio_musicPlayer_with_spotify_api/static/css/2.61b4cb56.chunk.css",
-    "static/js/2.41440c66.chunk.js": "/portfolio_musicPlayer_with_spotify_api/static/js/2.41440c66.chunk.js",
-    "static/js/2.41440c66.chunk.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/2.41440c66.chunk.js.map",
-    "static/js/3.be86e034.chunk.js": "/portfolio_musicPlayer_with_spotify_api/static/js/3.be86e034.chunk.js",
-    "static/js/3.be86e034.chunk.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/3.be86e034.chunk.js.map",
+    "static/js/2.924e6bdd.chunk.js": "/portfolio_musicPlayer_with_spotify_api/static/js/2.924e6bdd.chunk.js",
+    "static/js/2.924e6bdd.chunk.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/2.924e6bdd.chunk.js.map",
+    "static/js/3.bce2cd7b.chunk.js": "/portfolio_musicPlayer_with_spotify_api/static/js/3.bce2cd7b.chunk.js",
+    "static/js/3.bce2cd7b.chunk.js.map": "/portfolio_musicPlayer_with_spotify_api/static/js/3.bce2cd7b.chunk.js.map",
     "index.html": "/portfolio_musicPlayer_with_spotify_api/index.html",
     "static/css/2.61b4cb56.chunk.css.map": "/portfolio_musicPlayer_with_spotify_api/static/css/2.61b4cb56.chunk.css.map",
     "static/css/main.6dea0f05.chunk.css.map": "/portfolio_musicPlayer_with_spotify_api/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.41440c66.chunk.js.LICENSE.txt": "/portfolio_musicPlayer_with_spotify_api/static/js/2.41440c66.chunk.js.LICENSE.txt"
+    "static/js/2.924e6bdd.chunk.js.LICENSE.txt": "/portfolio_musicPlayer_with_spotify_api/static/js/2.924e6bdd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0f177285.js",
+    "static/js/runtime-main.83f502ce.js",
     "static/css/2.61b4cb56.chunk.css",
-    "static/js/2.41440c66.chunk.js",
+    "static/js/2.924e6bdd.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.27ee303c.chunk.js"
+    "static/js/main.3bc0d67b.chunk.js"
   ]
 }
