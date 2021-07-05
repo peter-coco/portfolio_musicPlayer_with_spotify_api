@@ -12,14 +12,17 @@ const MainMusicListWrap = styled.div`
   width: 100%;
   height: 80%;
 
-  grid-template-columns: repeat(auto-fill, minmax(50%, auto));
-  grid-template-rows: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+  /* grid-template-rows: repeat(auto-fill, minmax(20%, auto)); */
+  /* grid-template-rows: 1fr; */
   overflow-y: scroll;
-  /* overflow-x: hidden; */
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(auto-fill, minmax(50%, auto));
+  }
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
-    /* grid-template-rows: repeat(auto-fill, minmax(50%, auto)); */
   }
 `;
 
@@ -60,7 +63,6 @@ export const MainTrackListOnMode = () => {
 
   useEffect(() => {
     if (!searchResult) return;
-    // console.log("HIHI");
     if (mainModeIdx !== 3) return;
 
     spotifyApi.searchTracks(searchResult).then((res) => {
@@ -131,22 +133,3 @@ export const MainTrackListOnMode = () => {
     </MainMusicListWrap>
   );
 };
-
-// type C = {
-//   a:number;
-// }
-
-// type D = {
-//   a:number;
-//   b:number;
-// }
-
-// let c:any = {
-//   a:5,
-//   b:7
-// }
-
-// let d:C =  c;
-
-// console.log(d.b);
-// console.log((d as D).b)  // 확신이 있을 때 !!

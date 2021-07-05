@@ -1,8 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { GlobalState, Music } from "../../redux/reducer";
-import SpotifyWebApi from "spotify-web-api-node";
-import Actions from "../../redux/actions";
 
 const MainMusicList = styled.div`
   width: 100%;
@@ -84,12 +81,6 @@ const MainMusicListArtistNAlbum = styled.div`
 `;
 
 export const MainMusicLists = ({ track }: { track: Music }) => {
-  const dispatch = useDispatch();
-  const [spotifyApi, myListId, playingListId] = useSelector<
-    GlobalState,
-    [SpotifyWebApi, string, string]
-  >((state) => [state.spotifyApi, state.myListId, state.playingListId]);
-
   return (
     <MainMusicList>
       <MainMusicListImg src={track.albumImg} />
