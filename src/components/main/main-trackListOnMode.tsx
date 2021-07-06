@@ -15,7 +15,6 @@ const MainMusicListWrap = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(30%, auto));
   /* grid-template-rows: repeat(auto-fill, minmax(20%, auto)); */
   /* grid-template-rows: 1fr; */
-  overflow-y: scroll;
 
   @media (max-width: 1400px) {
     grid-template-columns: repeat(auto-fill, minmax(50%, auto));
@@ -23,6 +22,15 @@ const MainMusicListWrap = styled.div`
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr;
+  }
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 0px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
   }
 `;
 
@@ -85,9 +93,10 @@ export const MainTrackListOnMode = () => {
 
   useEffect(() => {
     if (!accessToken) return;
-    if (mainModeIdx !== 0) return;
+    if (mainModeIdx === 1 || mainModeIdx === 3) return;
 
     // 검색을 하고나서 다시 여기를 했을 때 잘 안먹히네...??
+
     spotifyApi
       .getRecommendations({
         seed_genres: [`${selectedMusicGenre}`],
@@ -100,7 +109,9 @@ export const MainTrackListOnMode = () => {
               title: track.name,
               artist: track.artists[0].name,
               album: track.album.name,
-              albumImg: track.album.images[0].url,
+              albumImg: track.album.images[0].url
+                ? track.album.images[0].url
+                : "",
               popularity: track.popularity,
               url: track.uri,
             };
@@ -114,8 +125,15 @@ export const MainTrackListOnMode = () => {
       });
   }, [selectedMusicGenre, accessToken, mainModeIdx]);
 
+  useEffect(() => {
+    const resetMusicListScroll = document.getElementById("musicList");
+    if (resetMusicListScroll) resetMusicListScroll.scrollTop = 0;
+    console.log(mainModeIdx);
+  }, [selectedMusicGenre, mainModeIdx]);
+
   return (
     <MainMusicListWrap
+      id="musicList"
       style={{
         display: mainModeIdx !== 1 ? "grid" : "none",
       }}

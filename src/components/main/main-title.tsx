@@ -32,16 +32,16 @@ const MainContentsTitleText = styled.div`
 `;
 
 const MainContentsTitleUnderbar = styled.div`
-  width: 100%;
+  width: 70%;
   height: 4px;
 
   @media (max-width: 750px) {
     height: 3px;
-    width: 90%;
+    width: 60%;
   }
 
   @media (max-width: 350px) {
-    width: 80%;
+    width: 50%;
     height: 2px;
   }
 `;

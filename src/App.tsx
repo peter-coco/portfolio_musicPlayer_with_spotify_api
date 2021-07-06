@@ -4,7 +4,6 @@ import store from "./redux/index";
 import styled from "styled-components";
 
 import { Navbar } from "./components/navbar/navbar";
-import { Footer } from "./components/footer/footer";
 import { Main } from "./components/main/main";
 
 const BackgroundWrap = styled.div`
@@ -25,7 +24,6 @@ function App() {
       <BackgroundWrap>
         <Navbar />
         <Main />
-        <Footer />
       </BackgroundWrap>
     </Provider>
   );

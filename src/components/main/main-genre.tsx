@@ -7,7 +7,6 @@ const MainGenreWrap = styled.div`
   width: 100%;
   height: 80%;
   grid-template-columns: 1fr 1fr 1fr;
-  overflow-y: scroll;
 
   @media (max-width: 750px) {
     grid-template-columns: 1fr 1fr;

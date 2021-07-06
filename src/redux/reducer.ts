@@ -108,7 +108,7 @@ function reducer(
       return {
         ...state,
         selectedMusicGenre: action.payload.genre,
-        mainContentsModeIdx: 0,
+        mainContentsModeIdx: 2,
         nameOfTitle: action.payload.nameOfTitle,
         colorOfTitleBar: action.payload.colorOfTitleBar,
       };

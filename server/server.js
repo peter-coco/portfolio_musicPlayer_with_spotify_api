@@ -19,7 +19,6 @@ app.post("/login", (req, res) => {
   spotifyApi
     .clientCredentialsGrant()
     .then((data) => {
-      console.log(data);
       res.json({
         accessToken: data.body.access_token,
         expiresIn: data.body.expires_in,
@@ -27,7 +26,6 @@ app.post("/login", (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       res.sendStatus(400);
     });
 });
